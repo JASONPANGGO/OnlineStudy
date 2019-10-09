@@ -1,5 +1,8 @@
 # onlinestudy
 
+> Vue 2.2, vue-cli 3.0
+> 两周内完成所有组件开发
+
 ## Project setup
 ```
 npm install
