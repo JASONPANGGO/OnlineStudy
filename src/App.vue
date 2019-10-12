@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <TopBar></TopBar>
     <Nav></Nav>
     <router-view />
   </div>
@@ -7,9 +8,10 @@
 
 <script>
 import Nav from "./components/Nav";
+import TopBar from "./components/TopBar";
 export default {
   components: {
-    Nav
+    Nav,TopBar
   }
 };
 </script>
@@ -20,5 +22,12 @@ body{
 }
 a{
     text-decoration: none;
+    color: #999999;
+}
+html{
+  font-size: 16px;
+}
+router-view{
+  margin-top: 60px;
 }
 </style>

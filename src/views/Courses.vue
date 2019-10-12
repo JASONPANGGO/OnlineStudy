@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>This is a videos page</h1>
+    <h1>This is a courses page</h1>
   </div>
 </template>
 <style scoped>
