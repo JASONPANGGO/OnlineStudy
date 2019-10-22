@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+
     <video src="../assets/Video_1.mp4" autoplay loop muted></video>
     <div class="head">
       <div class="logo">
@@ -18,6 +19,7 @@
           <i class="el-icon-refresh"></i>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -49,8 +51,9 @@ export default {
 </script>
 <style scoped>
 .home {
+  padding: 100px;
   max-width: 100vw;
-  height: 100vh;
+  height: 200vh;
   background-color: #404040;
   overflow: hidden;
 }

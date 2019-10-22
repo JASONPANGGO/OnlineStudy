@@ -1,11 +1,6 @@
 <template>
   <div class="nav" @mouseenter="toggleMenu" @mouseleave="toggleMenu" :class="{extend:extend}">
-    <div class="item">
-      <div class="logo icon">
-        <i :class="appLogo"></i>
-      </div>
-      <div class="name icon" :class="{opacity:extend}">{{appName}}</div>
-    </div>
+    <div class="item">logo</div>
     <div class="menu">
       <router-link :to="item == 'home'? '/' : item" v-for="(item, index) in nav" :key="index" active-class="active">
         <div class="item">
@@ -20,18 +15,13 @@
 </template>
 
 <script>
-import { store, mutations } from "../store";
 
 export default {
   name: "Nav",
+
   data() {
     return {
-      nav: [
-        { name: "home", logo: "el-icon-s-home" },
-        { name: "courses", logo: "el-icon-s-help" },
-        { name: "exams", logo: "el-icon-s-marketing" },
-        { name: "about", logo: "el-icon-info" }
-      ],
+      nav: ["home", "videos", "exams", "about"],
       extend: false
     };
   },
@@ -39,36 +29,29 @@ export default {
     toggleMenu() {
       this.extend = !this.extend;
     }
-  },
-  computed: {
-    appName: () => store.appName,
-    appLogo: () => store.appLogo
   }
 };
 </script>
 
 <style scoped>
 .nav {
-  z-index: 9999;
   position: fixed;
   left: 0;
   width: 60px;
   height: 100vh;
   background-color: rgb(34, 34, 34);
   transition: 0.2s all;
-  box-shadow: 0px 0 40px 30px rgba(0, 0, 0, 0.4);
+  box-shadow: 0px 0 40px 30px #292929;
 }
 
 .menu {
   margin-top: 30px;
-  color: #999999;
 }
 
 .item {
-  position: relative;
   width: 100%;
   height: 60px;
-
+  color: #999999;
   cursor: pointer;
   transition: 0.2s all;
 }
@@ -80,35 +63,5 @@ export default {
 
 .extend {
   width: 200px;
-}
-
-.logo {
-  width: 60px;
-  height: 60px;
-  line-height: 60px;
-  text-align: center;
-  font-size: 1.8rem;
-}
-
-.icon {
-  color: white;
-}
-
-.name {
-  position: absolute;
-  font-size: 0.8rem;
-  line-height: 60px;
-  top: 0;
-  left: 60px;
-  /* transition: 0.2s; */
-  opacity: 0;
-}
-
-.opacity {
-  opacity: 1;
-}
-
-.active {
-  color: rgb(0, 219, 110);
 }
 </style>
