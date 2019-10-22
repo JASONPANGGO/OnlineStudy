@@ -7,7 +7,7 @@
       <div class="name icon" :class="{opacity:extend}">{{appName}}</div>
     </div>
     <div class="menu">
-      <router-link :to="item == 'home'? '/' : item" v-for="(item, index) in nav" :key="index" active-class="active">
+      <router-link :to="item == 'home'? 'home' : item" v-for="(item, index) in nav" :key="index" active-class="active">
         <div class="item">
           <div class="logo">
             <i :class="item.logo"></i>
