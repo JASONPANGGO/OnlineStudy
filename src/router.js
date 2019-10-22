@@ -30,6 +30,11 @@ export default new Router({
         path:'/exams',
         name:'exams',
         component:() => import('./views/Exams.vue')
+    },
+    {
+      path:'/userinfo',
+      name:'userinfo',
+      component:()=> import('./views/UserInfo.vue')
     }
   ]
 })

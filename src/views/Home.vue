@@ -11,7 +11,7 @@
     </div>
     <div class="videos">
 
-      <VideoItem v-for="(video, index) in videos" :key="index" :title="video.title" :author="video.author" :imgSrc="video.imgSrc" :star="video.star"/>
+      <VideoItem style="margin-left:50px" v-for="(video, index) in videos" :key="index" :title="video.title" :author="video.author" :imgSrc="video.imgSrc" :star="video.star"/>
 
       <div class="refresh">
           <i class="el-icon-refresh"></i>
@@ -48,6 +48,7 @@ export default {
 };
 </script>
 <style scoped>
+
 .home {
   max-width: 100vw;
   height: 100vh;

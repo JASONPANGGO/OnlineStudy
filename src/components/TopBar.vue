@@ -6,15 +6,18 @@
       </div>
       <input class="input" type="text" placeholder="what do you want to learn?" @click="onSearch" />
 
+      <router-link to="/userinfo">
       <div class="info">
         <div class="info-text">
           <div class="info-name">{{name}}</div>
           <div class="info-account">{{account}}</div>
         </div>
         <div class="info-avatar">
-          <img :src="avatar" />
+          <img :src="avatarUrl" />
         </div>
       </div>
+
+      </router-link>
       <div class="more">
         <i class="el-icon-more"></i>
       </div>
@@ -27,14 +30,13 @@
 </template>
 
 <script>
+import { store,mutation } from "../store.js";
+
 export default {
   name: "TopBar",
   data() {
     return {
-      search: false,
-      name: "Jason Pang",
-      account: "jason_pang@126.com",
-      avatar: "http://placehold.it/50x50"
+      search: false
     };
   },
   methods: {
@@ -45,7 +47,12 @@ export default {
           this.$refs.input.focus();
         });
     }
-  }
+  },
+  computed: {
+    name:()=>store.userinfo.name,
+    account:()=>store.userinfo.account,
+    avatarUrl:()=>store.userinfo.avatarUrl
+  },
 };
 </script>
 

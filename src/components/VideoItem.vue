@@ -55,7 +55,6 @@ export default {
 #video-item {
   width: 270px;
   height: 180px;
-  margin-left: 50px;
   position: relative;
   border-radius: 10px;
 }
