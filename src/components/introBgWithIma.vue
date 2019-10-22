@@ -1,6 +1,9 @@
 <template>
-  <div class="outer" :style="{'backgroundImage':`url(${image})`,'backgroundSize':'100% 100%'}">
-    <div class="inner">
+  <div
+    class="outer"
+    :style="{'backgroundImage':`url(${image})`,'backgroundSize':'100% 100%',  'height': height+'px'}"
+  >
+    <div class="inner" v-if="type==='videoList'">
       <div class="font-contain">
         <div class="title">课程标题</div>
         <div class="writer">作者</div>
@@ -18,6 +21,11 @@
         <el-button type="text" plain native-type="button" icon="el-icon-star-off">收藏</el-button>
       </el-row>
     </div>
+    <div class="inner" v-else-if="type==='classList'">
+      <div class="font-contain classList">
+        <div class="class-type">课程类型</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -27,6 +35,14 @@ export default {
       type: String,
       default:
         "https://tse4.mm.bing.net/th?id=OIP.r4zOsUHTwxB5xLYo9Rf5DQHaE7&pid=Api&rs=1"
+    },
+    type: {
+      default: "videoList",
+      type: String
+    },
+    height: {
+      type: Number,
+      default: 300
     }
   },
   mounted() {
@@ -39,10 +55,8 @@ export default {
   font-weight: 100;
   box-sizing: border-box;
   width: 100%;
-  height: 300px;
   margin: 0;
   padding: 0;
-
   .inner {
     padding: 0;
     margin: 0;
@@ -59,8 +73,16 @@ export default {
       from(rgba(12, 12, 12, 0.479)),
       to(rgb(10, 10, 10))
     );
+    .classList {
+      display: flex;
+      justify-content: center;
+      align-content: center;
+      border-bottom: 10px solid rgb(255, 29, 206);
+    }
   }
   .font-contain {
+    height: 100%;
+
     .title {
       font-size: 32px;
       padding: 20px 10px 10px 30px;
@@ -69,6 +91,13 @@ export default {
     .introuce {
       margin: 20px 28px;
       font-size: 13px;
+    }
+    .class-type {
+      font-size: 36px;
+      width: 95%;
+      padding-top: 10px;
+      box-sizing: border-box;
+      height: 100%;
     }
   }
   .btn {

@@ -1,15 +1,55 @@
 <template>
   <div class="panel-outer">
     <el-col class="panel-btn">
-      <el-button type="text" plain native-type="button">课程教程</el-button>
-      <el-button type="text" plain native-type="button">课程简介</el-button>
-      <el-button type="text" plain native-type="button">课程评价</el-button>
+      <el-button
+        type="text"
+        plain
+        native-type="button"
+        @click="btnEvent(btnList[0])"
+        ref="firstBtn"
+      >{{btnList[0]}}</el-button>
+      <el-button
+        v-for="(item,index) in btnList"
+        :key="item"
+        type="text"
+        plain
+        native-type="button"
+        @click="btnEvent(item)"
+        v-show="index!==0"
+      >{{item}}</el-button>
     </el-col>
+
     <slot></slot>
   </div>
 </template>
 <script>
-export default {};
+export default {
+  methods: {
+    btnEvent(e) {
+      window.console.log(e);
+      this.$emit("parent-event", e);
+    }
+  },
+  props: {
+    panelType: {
+      default: "videoList",
+      type: String
+    },
+    btnList: {
+      default: null,
+      type: Array
+    }
+  },
+  model: {
+    event: "parent-event",
+    prop: "msg"
+  },
+  mounted() {
+    let firstBtn = this.$refs.firstBtn.$slots.default[0].text;
+    window.console.log(firstBtn);
+    this.$emit("parent-event", firstBtn);
+  }
+};
 </script>
 <style scoped  lang="scss">
 .panel-outer {

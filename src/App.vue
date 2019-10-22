@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Nav></Nav>
-    <router-view />         
+    <router-view />
   </div>
 </template>
 
@@ -14,12 +14,20 @@ export default {
   }
 };
 </script>
-<style scoped  lang="scss">
+<style   lang="scss">
 * {
   font-family: "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Helvetica,
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
-
+#app {
+  background: black;
+}
 body {
   margin: 0;
 }

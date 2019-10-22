@@ -10,13 +10,12 @@
 </template>
 
 <script>
-
 export default {
   name: "Nav",
 
   data() {
     return {
-      nav: ["home", "videos", "exams", "about"],
+      nav: ["home", "videos", "exams", "about", "classList"],
       extend: false
     };
   },

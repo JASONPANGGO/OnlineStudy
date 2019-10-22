@@ -35,11 +35,19 @@
   </el-aside>
 </template>
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      circleUrl: "",
+      value: 5
+    };
+  }
+};
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .outer {
   font-weight: 100;
+  width: 30%;
   padding-left: 20px;
   .writer {
     font-size: 20px;

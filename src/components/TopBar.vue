@@ -38,7 +38,7 @@ export default {
     };
   },
   methods: {
-    onSearch(e) {
+    onSearch() {
       this.search = !this.search;
       this.search &&
         this.$nextTick().then(() => {

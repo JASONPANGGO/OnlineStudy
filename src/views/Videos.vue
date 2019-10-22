@@ -2,10 +2,9 @@
 <template>
   <el-container class="about">
     <el-main class="main">
-      <introBgImg />
-      <panel>
-        <panelSlot></panelSlot>
-        <panelSlot :type="'introduce'"></panelSlot>
+      <introBgImg :type="'videoList'" />
+      <panel v-model="btnClick" :panelType="'videoList'" :btnList="btnList">
+        <panelSlot :type="btnClick"></panelSlot>
       </panel>
     </el-main>
     <leftAside class="aside"></leftAside>
@@ -17,6 +16,12 @@ import panel from "../components/panel";
 import leftAside from "../components/leftAside";
 import panelSlot from "../components/planeSlot";
 export default {
+  data() {
+    return {
+      btnClick: "111",
+      btnList: ["课程教程", "课程简介", "课程评价"]
+    };
+  },
   components: {
     introBgImg,
     panel,
