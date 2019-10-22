@@ -11,9 +11,7 @@
     </div>
     <div class="videos">
 
-
       <VideoItem v-for="(video, index) in videos" :key="index" :title="video.title" :author="video.author" :imgSrc="video.imgSrc" :star="video.star"/>
-
 
       <div class="refresh">
           <i class="el-icon-refresh"></i>
@@ -51,13 +49,11 @@ export default {
 </script>
 <style scoped>
 .home {
-  padding: 100px;
   max-width: 100vw;
-  height: 200vh;
+  height: 100vh;
   background-color: #404040;
   overflow: hidden;
 }
-
 video {
   position: fixed;
   margin-left: 60px;
@@ -65,7 +61,6 @@ video {
    user-select: none;   
   /* height: 100vh; */
 }
-
 .logo {
   position: absolute;
   top: 170px;
@@ -73,13 +68,11 @@ video {
   font-size: 3rem;
   color: white;
 }
-
 .name {
   margin-left: 1rem;
   font-size: 2.6rem;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
 }
-
 .slogan {
   position: absolute;
   top: 280px;
@@ -89,7 +82,6 @@ video {
   width: 400px;
   font-weight: bold;
 }
-
 .videos {
   position: absolute;
   width: calc(100vw - 60px);
@@ -98,11 +90,9 @@ video {
   bottom: 0;
   background-color: aqua;
   background: linear-gradient(transparent, #111111);
-
   display: flex;
   align-items: center;
 }
-
 .refresh{
     margin-left: 70px;
     font-size: 3rem;
@@ -116,7 +106,6 @@ video {
 @keyframes spin {
     
 		0%{-webkit-transform:rotate(0deg);}
-
 		100%{-webkit-transform:rotate(360deg);}
  
 }
