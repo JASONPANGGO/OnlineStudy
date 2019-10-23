@@ -8,6 +8,12 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
+      path: "/",
+      redirect: {
+        path: "/home"
+      }
+    },
+    {
       path: "/home",
       name: "home",
       component: Home
@@ -30,6 +36,16 @@ export default new Router({
       path: "/exams",
       name: "exams",
       component: () => import("./views/Exams.vue")
+    },
+    {
+      path: "/exams",
+      name: "exams",
+      component: () => import("./views/Exams.vue")
+    },
+    {
+      path: "/userinfo",
+      name: "userinfo",
+      component: () => import("./views/UserInfo.vue")
     },
     {
       path: "/classList",
