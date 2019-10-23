@@ -16,11 +16,30 @@
           <img :src="avatarUrl" />
         </div>
       </div>
-
       </router-link>
-      <div class="more">
+
+        <el-popover
+        placement="bottom"
+        width="200"
+        trigger="click">
+            <el-menu>
+                <el-menu-item>
+                    <span slot="title">
+                        <i class="el-icon-setting"></i>
+                        account setting
+                    </span>
+                </el-menu-item>
+                <el-menu-item>
+                    <span slot="title">
+                        <i class="el-icon-d-arrow-right"></i>
+                        sign out</span>
+                </el-menu-item>
+            </el-menu>
+      <div class="more" slot="reference">
         <i class="el-icon-more"></i>
       </div>
+        </el-popover>
+
     </div>
     <div class="search-cover" v-if="search" @click="onSearch">
       <div class="search-title">search</div>

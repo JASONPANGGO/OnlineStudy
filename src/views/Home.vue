@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-
-    <video src="../assets/Video_1.mp4" autoplay loop muted></video>
+      <VideoClipBackground />
+    <!-- <video src="../assets/Video_1.mp4" autoplay loop muted></video> -->
     <div class="head">
       <div class="logo">
         <i class="el-icon-s-promotion"></i>
@@ -24,11 +24,12 @@
 <script>
 import { store } from "../store";
 import VideoItem from "../components/VideoItem";
+import VideoClipBackground from "../components/VideoClipBackground";
 // @ is an alias to /src
 export default {
   name: "home",
   components: {
-    VideoItem
+    VideoItem,VideoClipBackground
   },
   data() {
     return {

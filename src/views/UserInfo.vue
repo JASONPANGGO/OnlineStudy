@@ -1,4 +1,6 @@
 <template>
+<div>
+      <VideoClipBackground cover='0.5'/>
   <div class="container">
     <div class="userinfo">
       <img :src="avatarUrl" alt />
@@ -26,21 +28,23 @@
       <div class="studying">
         <div class="title">Currently Learning</div>
         <div class="videos">
-          <VideoItem style="margin-top:20px;" v-for="(video, index) in videos" :key="index" :title="video.title"  :author="video.author" :imgSrc="video.imgSrc" :star="video.star" />
+          <VideoItem style="margin-top:20px;margin-left:20px;" v-for="(video, index) in videos" :key="index" :title="video.title"  :author="video.author" :imgSrc="video.imgSrc" :star="video.star" />
         </div>
       </div>
     </div>
+  </div>
   </div>
 </template>
 
 <script>
 import { store } from "../store.js";
 import VideoItem from "../components/VideoItem.vue";
+import VideoClipBackground from "../components/VideoClipBackground";
 
 export default {
   name: "UserInfo",
   components: {
-    VideoItem
+    VideoItem,VideoClipBackground
   },
   data() {
     return {
@@ -72,20 +76,6 @@ export default {
           imgSrc: "http://placehold.it/230x150",
           star: "7.7",
           id: "004"
-        },
-        {
-          title: "HTML高级教程",
-          author: "Mike Flog",
-          imgSrc: "http://placehold.it/230x150",
-          star: "9.6",
-          id: "001"
-        },
-        {
-          title: "CSS入门",
-          author: "Will Tune",
-          imgSrc: "http://placehold.it/230x150",
-          star: "5.6",
-          id: "002"
         },
         {
           title: "JavaScript进阶",
@@ -126,6 +116,7 @@ $themeColor: rgb(0, 219, 110);
   justify-content: space-around;
 }
 .userinfo {
+  z-index: 222;
   margin: 10px;
   margin-left: 70px;
   margin-top: 70px;
@@ -134,6 +125,7 @@ $themeColor: rgb(0, 219, 110);
   flex-direction: column;
   align-items: center;
   padding: 30px;
+
   img {
     width: 200px;
     height: 200px;
@@ -149,7 +141,7 @@ $themeColor: rgb(0, 219, 110);
     }
     .account {
       font-size: 0.9rem;
-      color: #999999;
+      color: #cfcfcf;
       margin-left: 10px;
     }
     .edit {
@@ -158,7 +150,7 @@ $themeColor: rgb(0, 219, 110);
       color: $themeColor;
     }
     .following {
-      color: #999999;
+      color: #cfcfcf;
       margin-top: 10px;
     }
     .interests {
@@ -167,9 +159,10 @@ $themeColor: rgb(0, 219, 110);
       .title {
         width: 100%;
         padding-bottom: 5px;
-        border-bottom: 1px solid #999999;
-        color: #999999;
+        border-bottom: 1px solid #cfcfcf;
+        color: #cfcfcf;
         font-size: 0.8rem;
+        letter-spacing: 3px;
       }
       .tag {
         margin-top: 10px;
@@ -180,9 +173,11 @@ $themeColor: rgb(0, 219, 110);
 }
 
 .maininfo {
+    z-index: 222;
   margin: 10px;
   margin-top: 70px;
   margin-right: 30px;
+
   flex: 2;
   .studying {
     margin-top: 30px;
@@ -195,7 +190,7 @@ $themeColor: rgb(0, 219, 110);
         margin-top: 20px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: flex-start;
     }
   }
 }
