@@ -51,6 +51,11 @@ export default new Router({
       path: "/classList",
       name: "classList",
       component: () => import("./views/classList.vue")
+    },
+    {
+      path: "/videoPlayer",
+      name: "videoPlayer",
+      component: () => import("./views/videoPlayer.vue")
     }
   ]
 });

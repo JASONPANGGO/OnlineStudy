@@ -7,7 +7,12 @@
       <div class="name icon" :class="{opacity:extend}">{{appName}}</div>
     </div>
     <div class="menu">
-      <router-link :to="item == 'home'? 'home' : item" v-for="(item, index) in nav" :key="index" active-class="active">
+      <router-link
+        :to="item == 'home'? 'home' : item"
+        v-for="(item, index) in nav"
+        :key="index"
+        active-class="active"
+      >
         <div class="item">
           <div class="logo">
             <i :class="item.logo"></i>
@@ -30,7 +35,8 @@ export default {
         { name: "videos", logo: "el-icon-s-help" },
         { name: "exams", logo: "el-icon-s-marketing" },
         { name: "about", logo: "el-icon-info" },
-        {name:'classList', logo: "el-icon-info" }
+        { name: "classList", logo: "el-icon-info" },
+        { name: "videoPlayer", logo: "el-icon-info" }
       ],
       extend: false
     };

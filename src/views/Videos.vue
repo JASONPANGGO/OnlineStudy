@@ -38,6 +38,7 @@ export default {
   position: absolute;
   left: 0;
   right: 0;
+  top:60px;
   z-index: 0;
 }
 .main {
