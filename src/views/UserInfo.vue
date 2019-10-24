@@ -1,38 +1,46 @@
 <template>
-<div>
-      <VideoClipBackground cover='0.5'/>
-  <div class="container">
-    <div class="userinfo">
-      <img :src="avatarUrl" alt />
-      <div class="info">
-        <span class="name">{{name}}</span>
-        <span class="account">{{account}}</span>
-        <div class="edit">Edit Profile</div>
-        <div class="following">
-          <b>{{following}}</b> following
+  <div>
+    <VideoClipBackground cover="0.5" />
+    <div class="container">
+      <div class="userinfo">
+        <img :src="avatarUrl" alt />
+        <div class="info">
+          <span class="name">{{name}}</span>
+          <span class="account">{{account}}</span>
+          <div class="edit">Edit Profile</div>
+          <div class="following">
+            <b>{{following}}</b> following
+          </div>
+          <div class="interests">
+            <div class="title">INTERESTS YOU FOLLOW</div>
+            <div class="tags">
+              <el-tag
+                class="tag"
+                type="info"
+                v-for="(interest, index) in interests"
+                :key="index"
+              >{{interest}}</el-tag>
+            </div>
+          </div>
         </div>
-        <div class="interests">
-          <div class="title">INTERESTS YOU FOLLOW</div>
-          <div class="tags">
-            <el-tag
-              class="tag"
-              type="info"
-              v-for="(interest, index) in interests"
+      </div>
+      <div class="maininfo">
+        <div class="studying">
+          <div class="title">Currently Learning</div>
+          <div class="videos">
+            <VideoItem
+              style="margin-top:20px;margin-left:20px;"
+              v-for="(video, index) in videos"
               :key="index"
-            >{{interest}}</el-tag>
+              :title="video.title"
+              :author="video.author"
+              :imgSrc="video.imgSrc"
+              :star="video.star"
+            />
           </div>
         </div>
       </div>
     </div>
-    <div class="maininfo">
-      <div class="studying">
-        <div class="title">Currently Learning</div>
-        <div class="videos">
-          <VideoItem style="margin-top:20px;margin-left:20px;" v-for="(video, index) in videos" :key="index" :title="video.title"  :author="video.author" :imgSrc="video.imgSrc" :star="video.star" />
-        </div>
-      </div>
-    </div>
-  </div>
   </div>
 </template>
 
@@ -44,7 +52,8 @@ import VideoClipBackground from "../components/VideoClipBackground";
 export default {
   name: "UserInfo",
   components: {
-    VideoItem,VideoClipBackground
+    VideoItem,
+    VideoClipBackground
   },
   data() {
     return {
@@ -173,7 +182,7 @@ $themeColor: rgb(0, 219, 110);
 }
 
 .maininfo {
-    z-index: 222;
+  z-index: 222;
   margin: 10px;
   margin-top: 70px;
   margin-right: 30px;
@@ -186,11 +195,11 @@ $themeColor: rgb(0, 219, 110);
       color: white;
       font-weight: bold;
     }
-    .videos{
-        margin-top: 20px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
+    .videos {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
     }
   }
 }

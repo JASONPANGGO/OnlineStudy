@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-      <VideoClipBackground />
+    <VideoClipBackground />
     <!-- <video src="../assets/Video_1.mp4" autoplay loop muted></video> -->
     <div class="head">
       <div class="logo">
@@ -10,14 +10,20 @@
       <div class="slogan">{{appSlogan}}</div>
     </div>
     <div class="videos">
-
-      <VideoItem style="margin-left:50px" v-for="(video, index) in videos" :key="index" :title="video.title" :author="video.author" :imgSrc="video.imgSrc" :star="video.star"/>
+      <VideoItem
+        style="margin-left:50px"
+        v-for="(video, index) in videos"
+        :key="index"
+        :title="video.title"
+        :author="video.author"
+        :imgSrc="video.imgSrc"
+        :star="video.star"
+      />
 
       <div class="refresh">
-          <i class="el-icon-refresh"></i>
+        <i class="el-icon-refresh"></i>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -29,16 +35,41 @@ import VideoClipBackground from "../components/VideoClipBackground";
 export default {
   name: "home",
   components: {
-    VideoItem,VideoClipBackground
+    VideoItem,
+    VideoClipBackground
   },
   data() {
     return {
-        videos:[
-            {title:'HTML高级教程',author:'Mike Flog',imgSrc:"http://placehold.it/230x150",star:"9.6",id:"001"},
-            {title:'CSS入门',author:'Will Tune',imgSrc:"http://placehold.it/230x150",star:"5.6",id:"002"},
-            {title:'JavaScript进阶',author:'Trenise Ruive',imgSrc:"http://placehold.it/230x150",star:"8.4",id:"003"},
-            {title:'TensorFlow从入门到精通',author:'Kiutruse Vlowers',imgSrc:"http://placehold.it/230x150",star:"7.7",id:"004"}
-        ]
+      videos: [
+        {
+          title: "HTML高级教程",
+          author: "Mike Flog",
+          imgSrc: "http://placehold.it/230x150",
+          star: "9.6",
+          id: "001"
+        },
+        {
+          title: "CSS入门",
+          author: "Will Tune",
+          imgSrc: "http://placehold.it/230x150",
+          star: "5.6",
+          id: "002"
+        },
+        {
+          title: "JavaScript进阶",
+          author: "Trenise Ruive",
+          imgSrc: "http://placehold.it/230x150",
+          star: "8.4",
+          id: "003"
+        },
+        {
+          title: "TensorFlow从入门到精通",
+          author: "Kiutruse Vlowers",
+          imgSrc: "http://placehold.it/230x150",
+          star: "7.7",
+          id: "004"
+        }
+      ]
     };
   },
   computed: {
@@ -49,7 +80,6 @@ export default {
 };
 </script>
 <style scoped>
-
 .home {
   max-width: 100vw;
   height: 100vh;
@@ -60,7 +90,7 @@ video {
   position: fixed;
   margin-left: 60px;
   width: 1920px;
-   user-select: none;   
+  user-select: none;
   /* height: 100vh; */
 }
 .logo {
@@ -95,20 +125,22 @@ video {
   display: flex;
   align-items: center;
 }
-.refresh{
-    margin-left: 70px;
-    font-size: 3rem;
-    color: white;
-    transition: 0.3s all;
-    cursor: pointer;
+.refresh {
+  margin-left: 70px;
+  font-size: 3rem;
+  color: white;
+  transition: 0.3s all;
+  cursor: pointer;
 }
-.refresh:hover{
-    animation: spin infinite 1s reverse;
+.refresh:hover {
+  animation: spin infinite 1s reverse;
 }
 @keyframes spin {
-    
-		0%{-webkit-transform:rotate(0deg);}
-		100%{-webkit-transform:rotate(360deg);}
- 
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 </style>
