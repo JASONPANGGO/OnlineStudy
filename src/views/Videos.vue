@@ -4,7 +4,7 @@
     <el-main class="main">
       <introBgImg :type="'videoList'" />
       <panel v-model="btnClick" :panelType="'videoList'" :btnList="btnList">
-        <panelSlot :type="btnClick"></panelSlot>
+        <panelSlot :type1="btnClick"></panelSlot>
       </panel>
     </el-main>
     <leftAside class="aside"></leftAside>
@@ -38,7 +38,7 @@ export default {
   position: absolute;
   left: 0;
   right: 0;
-  top:60px;
+  top: 60px;
   z-index: 0;
 }
 .main {

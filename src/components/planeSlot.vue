@@ -1,6 +1,6 @@
 <template>
   <div class="panel-slot-outer">
-    <div v-if="type==='课程教程'" class="video-list">
+    <div v-if="type1==='课程教程'" class="video-list">
       <div class="item-outer" :gutter="20" v-for="item in videoList" :key="item.title">
         <div class="item-outer-border">
           <div class="item-name">
@@ -11,10 +11,10 @@
         </div>
       </div>
     </div>
-    <div v-else-if="type==='课程简介'" class="introduce">
+    <div v-else-if="type1==='课程简介'" class="introduce">
       <div class="introduce-inner">{{introduce}}</div>
     </div>
-    <div v-else-if="type==='最新发布'||type==='热度排行'" class="class-list-lastest">
+    <div v-else-if="type1==='最新发布'||type1==='热度排行'" class="class-list-lastest">
       <div class="class-list-lastest-inner">
         <el-image :src="'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'"></el-image>
         <div class="class-message">
@@ -25,7 +25,7 @@
             <p>总时长</p>
             <p>
               <el-rate
-                v-model="value"
+                v-model="rateValue"
                 disabled
                 show-score
                 text-color="#ff9900"
@@ -42,11 +42,11 @@
 <script>
 export default {
   props: {
-    type: {
-      type: String,
-      default: "课程教程"
+    type1: {
+      defaultP: "1"
     }
   },
+
   data() {
     return {
       introduce: "ttttttttttttttttttttttttttttttttttttttttttttttt",
@@ -61,7 +61,8 @@ export default {
           url: "",
           time: "11"
         }
-      ]
+      ],
+      rateValue: 0
     };
   }
 };

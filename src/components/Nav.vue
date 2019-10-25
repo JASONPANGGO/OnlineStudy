@@ -36,7 +36,8 @@ export default {
         { name: "exams", logo: "el-icon-s-marketing" },
         { name: "about", logo: "el-icon-info" },
         { name: "classList", logo: "el-icon-info" },
-        { name: "videoPlayer", logo: "el-icon-info" }
+        { name: "videoPlayer", logo: "el-icon-info" },
+        { name: "createNewClass", logo: "el-icon-info" }
       ],
       extend: false
     };

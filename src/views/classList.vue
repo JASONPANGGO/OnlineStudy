@@ -3,7 +3,7 @@
     <el-main class="main">
       <introBgImg :type="'classList'" :height="200" />
       <panel v-model="btnClick" :panelType="'classList'" :btnList="btnList">
-        <panelSlot :type="btnClick"></panelSlot>
+        <panelSlot :type1="btnClick"></panelSlot>
       </panel>
     </el-main>
   </el-container>

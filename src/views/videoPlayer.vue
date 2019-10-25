@@ -48,9 +48,22 @@
   </div>
 </template>
 <script>
+import videojs from "video.js";
 export default {
   mounted() {
-    this.initVideo();
+    this.player = videojs(
+      "myVideo",
+      {
+        //确定播放器是否具有用户可以与之交互的控件。没有控件，启动视频播放的唯一方法是使用autoplay属性或通过Player API。
+        controls: true,
+        //自动播放属性,muted:静音播放
+        autoplay: "muted"
+        //建议浏览器是否应在<video>加载元素后立即开始下载视频数据。
+      },
+      function onPlayerReady() {
+        window.console.log("onPlayerReady", this);
+      }
+    );
   },
   data() {
     return {
@@ -59,25 +72,14 @@ export default {
       videoList: [0, 1, 23, 4, 5]
     };
   },
+  beforeDestroy() {
+    if (this.player) {
+      this.player.dispose();
+    }
+  },
   methods: {
     btnClick(index) {
       this.btnSelect = index;
-    },
-    initVideo() {
-      //初始化视频方法
-      this.$video(
-        "myVideo",
-        {
-          //确定播放器是否具有用户可以与之交互的控件。没有控件，启动视频播放的唯一方法是使用autoplay属性或通过Player API。
-          controls: true,
-          //自动播放属性,muted:静音播放
-          autoplay: "muted"
-          //建议浏览器是否应在<video>加载元素后立即开始下载视频数据。
-        },
-        () => {
-          window.console.log(11);
-        }
-      );
     }
   }
 };

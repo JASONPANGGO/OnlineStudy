@@ -18,7 +18,6 @@
         v-show="index!==0"
       >{{item}}</el-button>
     </el-col>
-
     <slot></slot>
   </div>
 </template>

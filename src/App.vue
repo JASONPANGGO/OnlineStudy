@@ -9,7 +9,7 @@
 <script>
 import Nav from "./components/Nav";
 import TopBar from "./components/TopBar";
-
+import "./css/form.css";
 export default {
   components: {
     Nav,
@@ -18,7 +18,7 @@ export default {
 };
 </script>
 
-<style   lang="scss">
+<style  >
 * {
   font-family: "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Helvetica,
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;

@@ -3,13 +3,13 @@
     class="outer"
     :style="{'backgroundImage':`url(${image})`,'backgroundSize':'100% 100%',  'height': height+'px'}"
   >
-    <div class="inner" v-if="type==='videoList'">
+    <div class="inner inner-video-list" v-if="type==='videoList'">
       <div class="font-contain">
         <div class="title">课程标题</div>
         <div class="writer">作者</div>
         <div class="introuce">课程简介</div>
       </div>
-      <el-row class="btn">
+      <div class="btn">
         <el-button
           type="primary"
           plain
@@ -19,12 +19,18 @@
         >主要按钮</el-button>
         <el-button type="text" plain native-type="button" icon="el-icon-upload2">附件下载</el-button>
         <el-button type="text" plain native-type="button" icon="el-icon-star-off">收藏</el-button>
-      </el-row>
+        <div style="flex:1;"></div>
+        <el-button type="primary" plain native-type="button" style="background:#F05A28;">编辑课程</el-button>
+      </div>
     </div>
-    <div class="inner" v-else-if="type==='classList'">
+    <div class="inner inner-class-list" v-else-if="type==='classList'">
       <div class="font-contain classList">
         <div class="class-type">课程类型</div>
       </div>
+    </div>
+    <div class="inner-new-class inner" v-else-if="type==='createNewClass'">
+      <el-button icon="el-icon-arrow-left" type="text">返回</el-button>
+      <div class="title">创建新课程</div>
     </div>
   </div>
 </template>
@@ -57,6 +63,25 @@ export default {
   width: 100%;
   margin: 0;
   padding: 0;
+  .inner-new-class {
+    justify-content: flex-start;
+    font-weight: 100;
+    .el-button {
+      width: 80px;
+      font-size: 19px;
+      color: white;
+    }
+    .title {
+      font-size: 40px;
+      padding: 20px;
+    }
+  }
+  .inner-class-list {
+    justify-content: space-between;
+  }
+  .inner-video-list {
+    justify-content: space-between;
+  }
   .inner {
     padding: 0;
     margin: 0;
@@ -65,7 +90,6 @@ export default {
     color: white;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     background: -webkit-gradient(
       linear,
       0 0,
@@ -101,8 +125,12 @@ export default {
     }
   }
   .btn {
-    margin-bottom: 20px;
-    margin-left: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    align-content: center;
+    width: 100%;
+    padding-left: 20px;
+    box-sizing: border-box;
     .el-button {
       font-weight: 100;
       outline: none;
@@ -112,6 +140,10 @@ export default {
       &:focus,
       &:hover {
         background: none;
+      }
+      &:last-child {
+        justify-self: flex-end;
+        margin-right: 10px;
       }
     }
   }
