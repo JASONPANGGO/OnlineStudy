@@ -55,10 +55,15 @@
               <div class="el-upload__tip" slot="tip">只能上传zip文件，且不超过5000kb</div>
             </el-upload>
           </el-form-item>
-          <el-form-item>
-            <P>注：视频文件在创建课程后进行添加</P>
-            <el-button round="true">确认</el-button>
-            <el-button round="true">取消</el-button>
+          <el-form-item label="视频文件" class="form-video">
+            <el-button :round="true" @click="uploadVideo">添加课程</el-button>
+            <div class="form-video-list">
+              <videoItem v-model="form.video"></videoItem>
+            </div>
+          </el-form-item>
+          <el-form-item class="form-button">
+            <el-button :round="true">确认</el-button>
+            <el-button :round="true">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -67,19 +72,61 @@
 </template>
 <script>
 import introBgImg from "../components/introBgWithIma.vue";
+import videoItem from "../components/videoDraggable";
 export default {
   components: {
-    introBgImg
+    introBgImg,
+    videoItem
   },
   data() {
     return {
+      colors: [
+        {
+          number: 1,
+          text: "文本",
+          type: "出现",
+          color: "#5BC7B2"
+        },
+        {
+          number: 1,
+          text: "文本",
+          type: "出现",
+          color: "#007FFF"
+        },
+        {
+          number: 2,
+          text: "文本",
+          type: "出现",
+          color: "#F69B29"
+        }
+      ],
       form: {
         name: "",
-        rate: ""
+        rate: 0,
+        video: [
+          {
+            url: "",
+            key: "videoList000",
+            name: ""
+          },
+          {
+            url: "",
+            key: "videoList001",
+            name: ""
+          }
+        ]
       }
     };
   },
   methods: {
+    uploadVideo(res) {
+      this.form.video.push({
+        url: "",
+        key: "videoList" + Math.random() * 1000 * this.form.video.length,
+        name: ""
+      });
+      window.console.log(res);
+    },
     goBack() {
       window.console.log("go back");
     }
@@ -89,6 +136,7 @@ export default {
 <style lang="scss" scoped>
 .about {
   .main {
+    width: 100%;
     .content {
       display: flex;
       width: 100%;
@@ -116,6 +164,7 @@ export default {
     padding: 0;
     .form {
       margin-left: 20px;
+      width: 100%;
       .el-form-item {
         margin: 20px;
         width: 300px;
@@ -124,6 +173,19 @@ export default {
             color: white;
           }
         }
+      }
+      .form-video {
+        width: calc(100% - 40px);
+        .el-button {
+          color: rgb(253, 253, 253);
+          background: #333333;
+          border: none;
+        }
+        .form-video-btn {
+          font-size: 10px;
+        }
+      }
+      .form-button {
         .el-button {
           background: #646464;
           color: aliceblue;
