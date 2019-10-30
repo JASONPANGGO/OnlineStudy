@@ -70,6 +70,7 @@ export default {
   color: #999999;
 }
 .item {
+  
   position: relative;
   width: 100%;
   height: 60px;
@@ -94,6 +95,7 @@ export default {
   color: white;
 }
 .name {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   position: absolute;
   font-size: 0.8rem;
   line-height: 60px;
@@ -107,5 +109,6 @@ export default {
 }
 .active {
   color: rgb(0, 219, 110);
+  font-weight: bold;
 }
 </style>

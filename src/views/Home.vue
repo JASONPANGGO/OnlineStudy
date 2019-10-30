@@ -1,7 +1,6 @@
 <template>
   <div class="home">
     <VideoClipBackground />
-    <!-- <video src="../assets/Video_1.mp4" autoplay loop muted></video> -->
     <div class="head">
       <div class="logo">
         <i class="el-icon-s-promotion"></i>
