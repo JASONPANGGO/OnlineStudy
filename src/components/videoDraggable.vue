@@ -11,10 +11,13 @@
         <span>{{item.url}}</span>
         <div class="video-list_item_btn">
           <el-button type="text" @click="deleteItem(index)">删除</el-button>
-          <el-upload type="text" action="11">上传视频</el-upload>
           <el-button type="text" @click="move(index,'up')" v-show="index!==0">上移</el-button>
           <el-button type="text" @click="move(index,'down')" v-show="index!==videolist.length-1">下移</el-button>
         </div>
+        <el-upload type="text" action="11" :limit="1" class="upload-demo">
+          <i class="el-icon-upload"></i>
+          上传视频
+        </el-upload>
       </div>
     </transition-group>
   </draggable>
@@ -86,6 +89,7 @@ export default {
 .video-list_item {
   display: flex;
   flex-direction: row;
+  height: 100px;
   width: calc(100% - 40px);
   margin: 10px 0;
   padding: 0 10px;
@@ -102,17 +106,26 @@ export default {
     align-items: center;
     .el-button {
       color: white;
-      margin: 0 10px;
-    }
-    .el-upload {
-      margin: 0 10px;
-      width: 50px;
     }
   }
-
+  .upload-demo {
+    margin: 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: flex;
+    width: 200px;
+    flex-direction: column;
+    .el-upload-list,
+    .el-upload-list--text {
+      width: 100px;
+    }
+    .el-upload-list {
+      width: 100px;
+    }
+  }
   .el-input {
     margin-left: 10px;
-    margin-right: 50px;
+
     width: 200px;
   }
 }

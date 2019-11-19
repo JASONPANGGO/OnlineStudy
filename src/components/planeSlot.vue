@@ -1,6 +1,6 @@
 <template>
   <div class="panel-slot-outer">
-    <div v-if="type1==='课程教程'" class="video-list">
+    <router-link :to="'videoPlay'" v-if="type1==='课程教程'" class="video-list">
       <div class="item-outer" :gutter="20" v-for="item in videoList" :key="item.title">
         <div class="item-outer-border">
           <div class="item-name">
@@ -10,12 +10,12 @@
           <div class="time">{{item.time}}</div>
         </div>
       </div>
-    </div>
+    </router-link>
     <div v-else-if="type1==='课程简介'" class="introduce">
       <div class="introduce-inner">{{introduce}}</div>
     </div>
     <div v-else-if="type1==='最新发布'||type1==='热度排行'" class="class-list-lastest">
-      <div class="class-list-lastest-inner">
+      <router-link :to="'videos'" class="class-list-lastest-inner">
         <el-image :src="'https://cube.elemecdn.com/6/94/4d3ea53c084bad6931a56d5158a48jpeg.jpeg'"></el-image>
         <div class="class-message">
           <div class="class-name">课程名字</div>
@@ -35,7 +35,7 @@
           </div>
         </div>
         <div class="class-btn"></div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>

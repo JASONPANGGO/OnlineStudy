@@ -101,7 +101,7 @@ export default {
       display: flex;
       justify-content: center;
       align-content: center;
-      border-bottom: 10px solid rgb(255, 29, 206);
+      // border-bottom: 10px solid rgb(255, 29, 206);
     }
   }
   .font-contain {

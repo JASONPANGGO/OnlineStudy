@@ -7,39 +7,36 @@
       <input class="input" type="text" placeholder="what do you want to learn?" @click="onSearch" />
 
       <router-link to="/userinfo">
-      <div class="info">
-        <div class="info-text">
-          <div class="info-name">{{name}}</div>
-          <div class="info-account">{{account}}</div>
+        <div class="info">
+          <div class="info-text">
+            <div class="info-name">{{name}}</div>
+            <div class="info-account">{{account}}</div>
+          </div>
+          <div class="info-avatar">
+            <img :src="avatarUrl" />
+          </div>
         </div>
-        <div class="info-avatar">
-          <img :src="avatarUrl" />
-        </div>
-      </div>
       </router-link>
 
-        <el-popover
-        placement="bottom"
-        width="200"
-        trigger="click">
-            <el-menu>
-                <el-menu-item>
-                    <span slot="title">
-                        <i class="el-icon-setting"></i>
-                        account setting
-                    </span>
-                </el-menu-item>
-                <el-menu-item>
-                    <span slot="title">
-                        <i class="el-icon-d-arrow-right"></i>
-                        sign out</span>
-                </el-menu-item>
-            </el-menu>
-      <div class="more" slot="reference">
-        <i class="el-icon-more"></i>
-      </div>
-        </el-popover>
-
+      <el-popover placement="bottom" width="200" trigger="click">
+        <el-menu>
+          <el-menu-item>
+            <span slot="title">
+              <i class="el-icon-setting"></i>
+              account setting
+            </span>
+          </el-menu-item>
+          <el-menu-item>
+            <router-link :to="'/login'" slot="title">
+              <i class="el-icon-d-arrow-right"></i>
+              sign out
+            </router-link>
+          </el-menu-item>
+        </el-menu>
+        <div class="more" slot="reference">
+          <i class="el-icon-more"></i>
+        </div>
+      </el-popover>
     </div>
     <div class="search-cover" v-if="search" @click="onSearch">
       <div class="search-title">search</div>
@@ -68,10 +65,10 @@ export default {
     }
   },
   computed: {
-    name:()=>store.userinfo.name,
-    account:()=>store.userinfo.account,
-    avatarUrl:()=>store.userinfo.avatarUrl
-  },
+    name: () => store.userinfo.name,
+    account: () => store.userinfo.account,
+    avatarUrl: () => store.userinfo.avatarUrl
+  }
 };
 </script>
 
