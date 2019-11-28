@@ -4,8 +4,7 @@ import Home from "./views/Home.vue";
 // import Videos from './views/Videos.vue'
 
 Vue.use(Router);
-
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: "/",
@@ -70,3 +69,12 @@ export default new Router({
     }
   ]
 });
+router.beforeEach((to, from, next) => {
+  const userKey = localStorage.getItem("loginKey");
+  if (!userKey && to.path !== "/login") {
+    next("/login");
+  } else {
+    next();
+  }
+});
+export default router;

@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <TopBar v-if="this.$route.paht!='/login'" />
-    <Nav v-if="this.$route.paht!='/login'"></Nav>
+    <TopBar />
+    <Nav></Nav>
     <router-view />
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
     Nav,
     TopBar
   },
-  created() {
+  beforeRouteUpdate() {
     window.console.log(this.$route.path);
   }
 };

@@ -74,7 +74,7 @@ export default {
 
 <style scoped>
 .topbar {
-  z-index: 8888;
+  z-index: 2;
   position: fixed;
   width: 100vw;
   height: 60px;
