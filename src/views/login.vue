@@ -1,6 +1,12 @@
 <template>
   <div id="login">
-    <video src="../assets/Video_1.mp4" autoplay loop muted class="video-clip"></video>
+    <video
+      src="../assets/Video_1.mp4"
+      autoplay
+      loop
+      muted
+      class="video-clip"
+    ></video>
     <div class="video-marsk">
       <div class="video-marsk-font">
         <i class="el-icon-s-promotion"></i>
@@ -10,81 +16,105 @@
       </div>
     </div>
     <div class="login-layer">
-      <el-form
-        v-show="model==='login'"
-        :model="loginForm"
-        :rules="loginRules"
-        ref="loginForm"
-        label-width="100px"
-        class="login-layer-form"
-      >
-        <el-form-item>
-          <span>登陆</span>
-        </el-form-item>
-        <el-form-item label="账号" prop="userName">
-          <el-input v-model="loginForm.userName" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="pass">
-          <el-input type="password" v-model="loginForm.pass" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">登陆</el-button>
-          <el-button @click="registerChange('register')">注册</el-button>
-        </el-form-item>
-      </el-form>
-      <el-form
-        v-show="model!=='login'"
-        :model="registerForm"
-        status-icon
-        :rules="registerRules"
-        ref="registerRules"
-        label-width="100px"
-        class="login-layer-form"
-      >
-        <el-button
-          icon="el-icon-arrow-left"
-          type="text"
-          @click="registerChange('login')"
-          class="back-login"
-        >返回登陆</el-button>
+      <transition name="fade">
+        <el-form
+          v-show="model === 'login'"
+          :model="loginForm"
+          :rules="loginRules"
+          ref="loginForm"
+          label-width="100px"
+          class="login-layer-form"
+        >
+          <el-form-item>
+            <span>登陆</span>
+          </el-form-item>
+          <el-form-item label="账号" prop="userName">
+            <el-input
+              v-model="loginForm.userName"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="pass">
+            <el-input
+              type="password"
+              v-model="loginForm.pass"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('loginForm')"
+              >登陆</el-button
+            >
+            <el-button @click="registerChange('register')">注册</el-button>
+          </el-form-item>
+        </el-form>
+      </transition>
+      <transition name="fade">
+        <el-form
+          v-show="model !== 'login'"
+          :model="registerForm"
+          status-icon
+          :rules="registerRules"
+          ref="registerRules"
+          label-width="100px"
+          class="login-layer-form"
+        >
+          <el-button
+            icon="el-icon-arrow-left"
+            type="text"
+            @click="registerChange('login')"
+            class="back-login"
+            >返回登陆</el-button
+          >
 
-        <el-form-item>
-          <span>注册</span>
-        </el-form-item>
+          <el-form-item>
+            <span>注册</span>
+          </el-form-item>
 
-        <el-form-item label="账号" prop="userName">
-          <el-input v-model="registerForm.userName" placeholder="登录时使用的账户名" autocomplete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="pass">
-          <el-input
-            placeholder="8位以上"
-            type="password"
-            v-model="registerForm.pass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input
-            type="password"
-            placeholder="再次输入密码"
-            v-model="registerForm.checkPass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="出生日期" prop="birthday">
-          <el-date-picker v-model="registerForm.birthday" type="date" placeholder="选择日期"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="性别" prop="gender">
-          <el-radio-group v-model="registerForm.gender">
-            <el-radio label="men">men</el-radio>
-            <el-radio label="women">women</el-radio>
-            <el-radio label="secret">Secret</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
-        </el-form-item>
-      </el-form>
+          <el-form-item label="账号" prop="userName">
+            <el-input
+              v-model="registerForm.userName"
+              placeholder="登录时使用的账户名"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="密码" prop="pass">
+            <el-input
+              placeholder="8位以上"
+              type="password"
+              v-model="registerForm.pass"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="确认密码" prop="checkPass">
+            <el-input
+              type="password"
+              placeholder="再次输入密码"
+              v-model="registerForm.checkPass"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+          <el-form-item label="出生日期" prop="birthday">
+            <el-date-picker
+              v-model="registerForm.birthday"
+              type="date"
+              placeholder="选择日期"
+            ></el-date-picker>
+          </el-form-item>
+          <el-form-item label="性别" prop="gender">
+            <el-radio-group v-model="registerForm.gender">
+              <el-radio label="men">men</el-radio>
+              <el-radio label="women">women</el-radio>
+              <el-radio label="secret">Secret</el-radio>
+            </el-radio-group>
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm')"
+              >注册</el-button
+            >
+          </el-form-item>
+        </el-form>
+      </transition>
     </div>
   </div>
 </template>
@@ -152,9 +182,31 @@ export default {
   },
   components: {},
   methods: {
-    submitForm() {
-      localStorage.setItem("loginKey", "success");
-      this.$router.push("/");
+    async submitForm(formName) {
+      // 登录事件
+      this.$refs[formName].validate(vaild => {
+        if (vaild) {
+          this.$fetchPost("/user/login", {
+            password: this.loginForm.pass,
+            username: this.loginForm.userName
+          }).then(data => {
+            window.console.log(data);
+            let { code } = data;
+            if (code === 100) {
+              localStorage.setItem("loginKey", "success");
+              this.$router.push("/");
+            } else {
+              this.$notify({
+                title: "提示",
+                message:
+                  ("i", { style: "color: teal" }, "账号或密码错误，请重新输入")
+              });
+            }
+          });
+        } else {
+          return false;
+        }
+      });
     },
     registerChange(model) {
       this.model = model;
@@ -200,7 +252,25 @@ export default {
     right: 60px;
     background: rgba(255, 255, 255, 0.74);
     border-radius: 20px;
-
+    .fade-enter-active {
+      animation: bounce-in 2s;
+    }
+    .fade-leave-active {
+      animation: bounce-in 2s reverse;
+    }
+    @keyframes bounce-in {
+      0% {
+        opacity: 0;
+        transform: translateX(200px);
+      }
+      50% {
+        opacity: 0;
+      }
+      100% {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
     .login-layer-form {
       span {
         color: rgb(53, 53, 53);
@@ -219,6 +289,7 @@ export default {
       padding-right: 60px;
       box-sizing: border-box;
       justify-content: center;
+      position: absolute;
     }
   }
   position: fixed;

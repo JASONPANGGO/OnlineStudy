@@ -88,6 +88,7 @@ html {
   scrollbar-track-color: #666; /**/ /*立体滚动条背景颜色*/
   scrollbar-base-color: #f8f8f8; /**/ /*滚动条的基本颜色*/
 }
+
 router-view {
   margin-top: 60px;
 }
