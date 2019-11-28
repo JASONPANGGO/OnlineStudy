@@ -29,4 +29,37 @@ npm run lint
 ```
 
 ### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 跨域问题 做了一个服务器的中转站
+
+```javascript
+// 打开 中间代理请求服务器
+// 安装依赖
+npm install
+// 运行
+npm run runServer
+// 然后就可以实现请求了
+
+```
+
+### 请求
+
+封装了`libs`请求直接使用
+
+并且绑到全局了VUE
+
+直接在组件请求
+
+例子login 
+
+```javascript
+this.$fetchPost("/user/login", {
+            password: this.loginForm.pass,
+            username: this.loginForm.userName
+          }).then(data=>{
+    // data 是返回的数据
+})
+
+```
+
+
+

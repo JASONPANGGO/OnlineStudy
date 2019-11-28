@@ -4,8 +4,7 @@ import Home from "./views/Home.vue";
 // import Videos from './views/Videos.vue'
 
 Vue.use(Router);
-
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: "/",
@@ -14,9 +13,19 @@ export default new Router({
       }
     },
     {
+      path: "/login",
+      name: "login",
+      component: () => import("./views/login.vue")
+    },
+    {
       path: "/home",
       name: "home",
       component: Home
+    },
+    {
+      path: "/news",
+      name: "news",
+      component: () => import("./views/news.vue")
     },
     {
       path: "/about",
@@ -28,20 +37,16 @@ export default new Router({
         import(/* webpackChunkName: "about" */ "./views/About.vue")
     },
     {
-      path: "/videos",
-      name: "videos",
-      component: () => import("./views/Videos.vue")
+      path: "/videosBrower",
+      name: "videosBrower",
+      component: () => import("./views/videoBrowers.vue")
     },
     {
       path: "/exams",
       name: "exams",
       component: () => import("./views/Exams.vue")
     },
-    {
-      path: "/exams",
-      name: "exams",
-      component: () => import("./views/Exams.vue")
-    },
+
     {
       path: "/userinfo",
       name: "userinfo",
@@ -53,14 +58,25 @@ export default new Router({
       component: () => import("./views/classList.vue")
     },
     {
-      path: "/videoPlayer",
-      name: "videoPlayer",
-      component: () => import("./views/videoPlayer.vue")
+      path: "/videos",
+      name: "videos",
+      component: () => import("./components/Videos.vue")
     },
     {
-      path: "/createNewClass",
-      name: "createNewClass",
-      component: () => import("./views/createNewClass.vue")
+      path: "/videoplay",
+      name: "videoplay",
+      component: () => import("./components/videoPlayer.vue")
     }
   ]
 });
+router.beforeEach((to, from, next) => {
+  const userKey = localStorage.getItem("loginKey");
+  if (!userKey && to.path !== "/login") {
+    next("/login");
+  } else if (userKey && to.path === "/login") {
+    next("/");
+  } else {
+    next();
+  }
+});
+export default router;

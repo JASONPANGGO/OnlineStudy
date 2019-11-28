@@ -11,10 +11,10 @@
   </el-container>
 </template>
 <script>
-import introBgImg from "../components/introBgWithIma";
-import panel from "../components/panel";
-import leftAside from "../components/leftAside";
-import panelSlot from "../components/planeSlot";
+import introBgImg from "./introBgWithIma";
+import panel from "./panel";
+import leftAside from "./leftAside";
+import panelSlot from "./planeSlot";
 export default {
   data() {
     return {

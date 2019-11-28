@@ -14,11 +14,14 @@ export default {
   components: {
     Nav,
     TopBar
+  },
+  beforeRouteUpdate() {
+    window.console.log(this.$route.path);
   }
 };
 </script>
 
-<style  >
+<style   lang="scss">
 * {
   font-family: "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", Helvetica,
     "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
@@ -29,11 +32,13 @@ export default {
   -ms-user-select: none;
   user-select: none;
 }
+
 #app {
   background: black;
 }
 body {
   margin: 0;
+  background: #181818;
 }
 a {
   text-decoration: none;
@@ -83,6 +88,7 @@ html {
   scrollbar-track-color: #666; /**/ /*立体滚动条背景颜色*/
   scrollbar-base-color: #f8f8f8; /**/ /*滚动条的基本颜色*/
 }
+
 router-view {
   margin-top: 60px;
 }

@@ -32,12 +32,10 @@ export default {
     return {
       nav: [
         { name: "home", logo: "el-icon-s-home" },
-        { name: "videos", logo: "el-icon-s-help" },
+        { name: "videosBrower", logo: "el-icon-s-help" },
         { name: "exams", logo: "el-icon-s-marketing" },
-        { name: "about", logo: "el-icon-info" },
-        { name: "classList", logo: "el-icon-info" },
-        { name: "videoPlayer", logo: "el-icon-info" },
-        { name: "createNewClass", logo: "el-icon-info" }
+        { name: "news", logo: "el-icon-eleme" },
+        { name: "about", logo: "el-icon-info" }
       ],
       extend: false
     };
@@ -56,7 +54,7 @@ export default {
 
 <style scoped>
 .nav {
-  z-index: 9999;
+  z-index: 3;
   position: fixed;
   left: 0;
   width: 60px;
@@ -70,7 +68,6 @@ export default {
   color: #999999;
 }
 .item {
-  
   position: relative;
   width: 100%;
   height: 60px;
@@ -95,7 +92,7 @@ export default {
   color: white;
 }
 .name {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   position: absolute;
   font-size: 0.8rem;
   line-height: 60px;
