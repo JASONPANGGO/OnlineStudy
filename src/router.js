@@ -66,17 +66,21 @@ const router = new Router({
       path: "/videoplay",
       name: "videoplay",
       component: () => import("./components/videoPlayer.vue")
+    },
+    {
+      path:"/publishnews",
+      name:''
     }
   ]
 });
-router.beforeEach((to, from, next) => {
-  const userKey = localStorage.getItem("loginKey");
-  if (!userKey && to.path !== "/login") {
-    next("/login");
-  } else if (userKey && to.path === "/login") {
-    next("/");
-  } else {
-    next();
-  }
-});
+// router.beforeEach((to, from, next) => {
+//   const userKey = localStorage.getItem("loginKey");
+//   if (!userKey && to.path !== "/login") {
+//     next("/login");
+//   } else if (userKey && to.path === "/login") {
+//     next("/");
+//   } else {
+//     next();
+//   }
+// });
 export default router;
