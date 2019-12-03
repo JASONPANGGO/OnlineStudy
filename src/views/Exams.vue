@@ -1,18 +1,14 @@
 <template>
   <div class="container">
     <div class="exams-list" v-if="!theme">
-      <el-card class="card" :body-style="{ padding: '0px' }">
-        <img
-          src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-          class="image"
-        />
-        <div style="padding: 14px;">
-          <span>好吃的汉堡</span>
-          <div class="bottom clearfix">
-            <el-button type="text" class="button">操作按钮</el-button>
+      <div v-for="(item, index) in subjects" :key="index" @click="enterExam(item)">
+        <el-card class="card" :body-style="{ padding: '0px' }">
+          <img src="http://placehold.it/400x200" class="image" />
+          <div style="padding: 14px;text-align:center">
+            <span>{{item}}</span>
           </div>
-        </div>
-      </el-card>
+        </el-card>
+      </div>
     </div>
     <div class="exams" v-if="theme">
       <VideoClipBackground :cover="0.8" />
@@ -83,6 +79,13 @@ export default {
         }
         this.buttonType.splice(this.key, 1, "success");
       }
+    },
+    enterExam(subject) {
+      //   this.$refs.clock.countdownStart();
+      this.theme = subject;
+      this.$nextTick(() => {
+        this.$refs.clock.countdownStart();
+      });
     }
   }
 };
@@ -93,12 +96,21 @@ $vh: 100vh;
 $exam-height: 600px;
 
 .exams-list {
-    padding: 100px;
-    display: flex;
-    flex-wrap: wrap;
+  padding: 100px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 
-
+.card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: 0.3s all;
+}
+.card:hover {
+  transform: translateY(-20px)
+}
 
 .exams {
   width: 100vw;

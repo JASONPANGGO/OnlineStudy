@@ -42,7 +42,7 @@
         </div>
       </div>
     </div>
-    <el-dialog title="编辑个人信息" :visible.sync="dialogVisible">
+    <el-dialog title="编辑个人信息" :visible.sync="dialogVisible" class="edit-dialog">
       <el-form :model="form">
         <el-form-item style="display:flex;justify-content:center">
           <el-upload
@@ -219,6 +219,10 @@ export default {
 
 <style scoped lang="scss">
 $themeColor: rgb(0, 219, 110);
+
+.edit-dialog .el-dialog__header{
+    background-color: #404040;
+}
 
 .el-tag + .el-tag {
   margin-left: 10px;
