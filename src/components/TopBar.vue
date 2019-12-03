@@ -27,10 +27,10 @@
             </span>
           </el-menu-item>
           <el-menu-item>
-            <router-link :to="'/login'" slot="title">
+            <div :to="'/login'" slot="title" @click="signout">
               <i class="el-icon-d-arrow-right"></i>
               sign out
-            </router-link>
+            </div>
           </el-menu-item>
         </el-menu>
         <div class="more" slot="reference">
@@ -56,6 +56,10 @@ export default {
     };
   },
   methods: {
+    signout() {
+      localStorage.clear();
+      this.$router.push("/login");
+    },
     onSearch() {
       this.search = !this.search;
       this.search &&
