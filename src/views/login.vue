@@ -22,8 +22,8 @@
           <el-form-item>
             <span>登陆</span>
           </el-form-item>
-          <el-form-item label="账号" prop="userName">
-            <el-input v-model="loginForm.userName" autocomplete="off"></el-input>
+          <el-form-item label="邮箱" prop="mail">
+            <el-input v-model="loginForm.mail" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="pass">
             <el-input type="password" v-model="loginForm.pass" autocomplete="off"></el-input>
@@ -40,7 +40,7 @@
           :model="registerForm"
           status-icon
           :rules="registerRules"
-          ref="registerRules"
+          ref="registerForm"
           label-width="100px"
           class="login-layer-form"
         >
@@ -55,8 +55,20 @@
             <span>注册</span>
           </el-form-item>
 
-          <el-form-item label="账号" prop="userName">
-            <el-input v-model="registerForm.userName" placeholder="登录时使用的账户名" autocomplete="off"></el-input>
+          <el-form-item label="邮箱" prop="mail">
+            <el-input
+              v-model="registerForm.mail"
+              placeholder="登录时使用的账户名"
+              autocomplete="off"
+            ></el-input>
+          </el-form-item>
+
+          <el-form-item label="用户名" prop="userName">
+            <el-input
+              v-model="registerForm.userName"
+              placeholder="昵称"
+              autocomplete="off"
+            ></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="pass">
             <el-input
@@ -85,14 +97,18 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
+            <el-button type="primary" @click="submitForm('registerForm')"
+              >注册</el-button
+            >
           </el-form-item>
         </el-form>
       </transition>
     </div>
   </div>
 </template>
+
 <script>
+import { mutations } from "../store.js";
 export default {
   data() {
     var inputRuler = (rule, value, callback) => {
@@ -100,6 +116,23 @@ export default {
         return callback(new Error("输入不能为空"));
       } else {
         return callback();
+      }
+    };
+    var registerUserName = async (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("输入不能为空"));
+      } else if (value.length < 5) {
+        return callback(new Error("长度至少为6位"));
+      } else {
+        // 查询username是否重复
+        let flag = await this.$fetchGet(
+          `/user/mail?mail=${this.registerForm.mail}`
+        );
+        if (flag.status === 200) {
+          return callback();
+        } else {
+          return callback(new Error("已存在用户"));
+        }
       }
     };
     var validatePass = (rule, value, callback) => {
@@ -125,11 +158,15 @@ export default {
       registerForm: {
         userName: "",
         pass: "",
+        mail: "",
         checkPass: "",
         birthday: "",
         gender: "secret"
       },
       registerRules: {
+        mail: [
+          { required: true, validator: registerUserName, trigger: "blur" }
+        ],
         userName: [{ required: true, validator: inputRuler, trigger: "blur" }],
         pass: [{ required: true, validator: validatePass, trigger: "blur" }],
         checkPass: [
@@ -145,39 +182,62 @@ export default {
         ]
       },
       loginForm: {
-        userName: "",
+        mail: "",
         pass: ""
       },
       loginRules: {
         pass: [{ validator: inputRuler, trigger: "blur" }],
-        userName: [{ validator: inputRuler, trigger: "blur" }]
+        mail: [{ validator: inputRuler, trigger: "blur" }]
       }
     };
   },
   components: {},
   methods: {
-    async submitForm(formName) {
-      console.log(this.$refs[formName]);
+    submitForm(formName) {
       // 登录事件
       this.$refs[formName].validate(vaild => {
         if (vaild) {
-          this.$fetchPost("/user/login", {
-            password: this.loginForm.pass,
-            username: this.loginForm.userName
-          }).then(data => {
-            window.console.log(data);
-            let { code } = data;
-            if (code === 100) {
-              localStorage.setItem("loginKey", "success");
-              this.$router.push("/");
-            } else {
-              this.$notify({
-                title: "提示",
-                message:
-                  ("i", { style: "color: teal" }, "账号或密码错误，请重新输入")
+          if (formName === "loginForm") {
+            this.$fetchPost("/login", this.loginForm).then(data => {
+              window.console.log(data);
+              let { status, token } = data;
+              if (status === 200) {
+                localStorage.setItem("loginKey", token);
+                mutations.setUseinfo(data);
+                this.$router.push("/");
+              } else {
+                this.$notify({
+                  title: "提示",
+                  message:
+                    ("i",
+                    { style: "color: teal" },
+                    "账号或密码错误，请重新输入")
+                });
+              }
+            });
+          } else {
+            this.$fetchPost("/register", this.registerForm)
+              .then(data => {
+                window.console.log(data);
+                let { token } = data;
+                if (data.status === 200) {
+                  localStorage.setItem("loginKey", token);
+                  // mutations.setUseinfo(data);
+                  this.$router.push("/");
+                } else {
+                  this.$notify({
+                    title: "提示",
+                    message: ("i", { style: "color: teal" }, "服务器错误")
+                  });
+                }
+              })
+              .catch(() => {
+                this.$notify({
+                  title: "提示",
+                  message: ("i", { style: "color: teal" }, "服务器错误")
+                });
               });
-            }
-          });
+          }
         } else {
           return false;
         }
@@ -221,8 +281,9 @@ export default {
   .login-layer {
     position: absolute;
     width: 500px;
+    padding-bottom: 1cm;
     min-height: 500px;
-    height: 500px;
+
     top: 100px;
     right: 60px;
     background: rgba(255, 255, 255, 0.74);

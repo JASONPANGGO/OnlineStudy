@@ -2,7 +2,8 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import ElementUI from "element-ui";
-import { fetchPost } from "./lib/fetch";
+
+import { fetchPost, fetchGet } from "./lib/fetch";
 import "element-ui/lib/theme-chalk/index.css";
 
 import "../node_modules/video.js/dist/video-js.min.css";
@@ -10,7 +11,15 @@ import "../node_modules/video.js/dist/video-js.min.css";
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
 Vue.prototype.$fetchPost = fetchPost;
+Vue.prototype.$fetchGet = fetchGet;
+
 new Vue({
   router,
-  render: h => h(App)
+
+  render: h => h(App),
+  beforeDestroyed: () => {
+    localStorage.clear();
+    window.console.log("1");
+  }
 }).$mount("#app");
+  
