@@ -1,4 +1,4 @@
-import Vue from 'vue'
+import Vue from "vue";
 
 export let store = Vue.observable({
     appName: 'OnlineStudy',
@@ -16,5 +16,11 @@ export let store = Vue.observable({
 })
 
 export let mutations = {
-
-}
+  setUseinfo(userInfo) {
+    store.userinfo.name = userInfo.userName;
+    store.userinfo.account = userInfo.mail;
+    let { interests, following } = userInfo;
+    store.userinfo.interests = interests;
+    store.userinfo.followin = following;
+  }
+};

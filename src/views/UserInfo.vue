@@ -9,7 +9,7 @@
           <span class="account">{{account}}</span>
           <div class="edit" @click="edit">Edit Profile</div>
           <div class="following">
-            <b>{{following}}</b> following
+            <b>{{ following }}</b> following
           </div>
           <div class="interests">
             <div class="title">INTERESTS YOU FOLLOW</div>
@@ -19,7 +19,8 @@
                 type="info"
                 v-for="(interest, index) in interests"
                 :key="index"
-              >{{interest}}</el-tag>
+                >{{ interest }}</el-tag
+              >
             </div>
           </div>
         </div>
