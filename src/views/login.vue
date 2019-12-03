@@ -1,12 +1,6 @@
 <template>
   <div id="login">
-    <video
-      src="../assets/Video_1.mp4"
-      autoplay
-      loop
-      muted
-      class="video-clip"
-    ></video>
+    <video src="../assets/Video_1.mp4" autoplay loop muted class="video-clip"></video>
     <div class="video-marsk">
       <div class="video-marsk-font">
         <i class="el-icon-s-promotion"></i>
@@ -29,22 +23,13 @@
             <span>登陆</span>
           </el-form-item>
           <el-form-item label="账号" prop="userName">
-            <el-input
-              v-model="loginForm.userName"
-              autocomplete="off"
-            ></el-input>
+            <el-input v-model="loginForm.userName" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="pass">
-            <el-input
-              type="password"
-              v-model="loginForm.pass"
-              autocomplete="off"
-            ></el-input>
+            <el-input type="password" v-model="loginForm.pass" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('loginForm')"
-              >登陆</el-button
-            >
+            <el-button type="primary" @click="submitForm('loginForm')">登陆</el-button>
             <el-button @click="registerChange('register')">注册</el-button>
           </el-form-item>
         </el-form>
@@ -64,19 +49,14 @@
             type="text"
             @click="registerChange('login')"
             class="back-login"
-            >返回登陆</el-button
-          >
+          >返回登陆</el-button>
 
           <el-form-item>
             <span>注册</span>
           </el-form-item>
 
           <el-form-item label="账号" prop="userName">
-            <el-input
-              v-model="registerForm.userName"
-              placeholder="登录时使用的账户名"
-              autocomplete="off"
-            ></el-input>
+            <el-input v-model="registerForm.userName" placeholder="登录时使用的账户名" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="pass">
             <el-input
@@ -95,11 +75,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="出生日期" prop="birthday">
-            <el-date-picker
-              v-model="registerForm.birthday"
-              type="date"
-              placeholder="选择日期"
-            ></el-date-picker>
+            <el-date-picker v-model="registerForm.birthday" type="date" placeholder="选择日期"></el-date-picker>
           </el-form-item>
           <el-form-item label="性别" prop="gender">
             <el-radio-group v-model="registerForm.gender">
@@ -109,9 +85,7 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')"
-              >注册</el-button
-            >
+            <el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
           </el-form-item>
         </el-form>
       </transition>
@@ -131,7 +105,7 @@ export default {
     var validatePass = (rule, value, callback) => {
       if (!value) {
         return callback(new Error("输入不能为空"));
-      } else if (value.length < 9) {
+      } else if (value.length < 8) {
         return callback(new Error("密码长度至少为8位"));
       } else {
         callback();
@@ -183,6 +157,7 @@ export default {
   components: {},
   methods: {
     async submitForm(formName) {
+      console.log(this.$refs[formName]);
       // 登录事件
       this.$refs[formName].validate(vaild => {
         if (vaild) {
@@ -253,10 +228,10 @@ export default {
     background: rgba(255, 255, 255, 0.74);
     border-radius: 20px;
     .fade-enter-active {
-      animation: bounce-in 2s;
+      animation: bounce-in 1s;
     }
     .fade-leave-active {
-      animation: bounce-in 2s reverse;
+      animation: bounce-in 1s reverse;
     }
     @keyframes bounce-in {
       0% {
