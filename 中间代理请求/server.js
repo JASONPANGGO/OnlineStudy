@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const Koa = require("koa");
 const Router = require("koa-router");
 const server = new Koa();

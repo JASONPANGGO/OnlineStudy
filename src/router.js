@@ -23,7 +23,7 @@ router.beforeEach(async (to, from, next) => {
       // token 过期
       if (result.status === 200) {
         // 用户信息
-        console.log(result);
+
         mutations.setUseinfo(result);
         if (to.path === "/login") {
           next("/");

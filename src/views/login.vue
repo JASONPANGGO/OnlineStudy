@@ -1,12 +1,6 @@
 <template>
   <div id="login">
-    <video
-      src="../assets/Video_1.mp4"
-      autoplay
-      loop
-      muted
-      class="video-clip"
-    ></video>
+    <video src="../assets/Video_1.mp4" autoplay loop muted class="video-clip"></video>
     <div class="video-marsk">
       <div class="video-marsk-font">
         <i class="el-icon-s-promotion"></i>
@@ -32,16 +26,10 @@
             <el-input v-model="loginForm.mail" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="pass">
-            <el-input
-              type="password"
-              v-model="loginForm.pass"
-              autocomplete="off"
-            ></el-input>
+            <el-input type="password" v-model="loginForm.pass" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('loginForm')"
-              >登陆</el-button
-            >
+            <el-button type="primary" @click="submitForm('loginForm')">登陆</el-button>
             <el-button @click="registerChange('register')">注册</el-button>
           </el-form-item>
         </el-form>
@@ -61,8 +49,7 @@
             type="text"
             @click="registerChange('login')"
             class="back-login"
-            >返回登陆</el-button
-          >
+          >返回登陆</el-button>
 
           <el-form-item>
             <span>注册</span>
@@ -100,11 +87,7 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="出生日期" prop="birthday">
-            <el-date-picker
-              v-model="registerForm.birthday"
-              type="date"
-              placeholder="选择日期"
-            ></el-date-picker>
+            <el-date-picker v-model="registerForm.birthday" type="date" placeholder="选择日期"></el-date-picker>
           </el-form-item>
           <el-form-item label="性别" prop="gender">
             <el-radio-group v-model="registerForm.gender">
@@ -123,6 +106,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { mutations } from "../store.js";
 export default {
@@ -306,10 +290,10 @@ export default {
     background: rgba(255, 255, 255, 0.74);
     border-radius: 20px;
     .fade-enter-active {
-      animation: bounce-in 2s;
+      animation: bounce-in 1s;
     }
     .fade-leave-active {
-      animation: bounce-in 2s reverse;
+      animation: bounce-in 1s reverse;
     }
     @keyframes bounce-in {
       0% {

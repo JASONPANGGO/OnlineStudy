@@ -1,13 +1,13 @@
 <template>
   <div>
-    <VideoClipBackground cover="0.5" />
+    <VideoClipBackground :cover="0.5" />
     <div class="container">
       <div class="userinfo">
-        <img :src="avatarUrl" alt />
+        <img class="avatar" :src="avatarUrl" alt />
         <div class="info">
-          <span class="name">{{ name }}</span>
-          <span class="account">{{ account }}</span>
-          <div class="edit">Edit Profile</div>
+          <span class="name">{{name}}</span>
+          <span class="account">{{account}}</span>
+          <div class="edit" @click="edit">Edit Profile</div>
           <div class="following">
             <b>{{ following }}</b> following
           </div>
@@ -42,6 +42,62 @@
         </div>
       </div>
     </div>
+    <el-dialog title="编辑个人信息" :visible.sync="dialogVisible" class="edit-dialog">
+      <el-form :model="form">
+        <el-form-item style="display:flex;justify-content:center">
+          <el-upload
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :before-upload="handleAvatarPreview"
+          >
+            <img class="avatar" :src="form.avatarUrl" alt />
+            <div class="img-upload-cover">
+              <i class="el-icon-upload2"></i>
+            </div>
+          </el-upload>
+        </el-form-item>
+        <el-form-item label="昵称" label-width="160px">
+          <el-col :span="18">
+            <el-input v-model="form.name"></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item label="性别" label-width="160px">
+          <el-radio-group v-model="form.gender">
+            <el-radio :label="'male'">
+              <i class="el-icon-male"></i>
+            </el-radio>
+            <el-radio :label="'female'">
+              <i class="el-icon-female"></i>
+            </el-radio>
+            <el-radio :label="'secret'">
+              <i class="el-icon-lock"></i>
+            </el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="兴趣" label-width="160px">
+          <el-tag
+            :key="tag"
+            v-for="tag in form.interests"
+            closable
+            :disable-transitions="false"
+            @close="handleClose(tag)"
+          >{{tag}}</el-tag>
+          <el-input
+            class="input-new-tag"
+            v-if="inputVisible"
+            v-model="inputValue"
+            ref="saveTagInput"
+            size="small"
+            @keyup.enter.native="handleInputConfirm"
+            @blur="handleInputConfirm"
+          ></el-input>
+          <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+        </el-form-item>
+      </el-form>
+      <div style="width:100%;display:flex;justify-content:flex-end">
+        <el-button type="primary" size="small" @click="handleEdit(true)">确定</el-button>
+        <el-button size="small" @click="handleEdit(false)">取消</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -101,7 +157,16 @@ export default {
           star: "7.7",
           id: "004"
         }
-      ]
+      ],
+      dialogVisible: false,
+      form: {
+        name: "",
+        gender: "",
+        interests: [],
+        avatarUrl: ""
+      },
+      inputVisible: false,
+      inputValue: ""
     };
   },
   computed: {
@@ -109,13 +174,71 @@ export default {
     account: () => store.userinfo.account,
     avatarUrl: () => store.userinfo.avatarUrl,
     following: () => store.userinfo.following,
-    interests: () => store.userinfo.interests
+    interests: () => store.userinfo.interests,
+    gender: () => store.userinfo.gender
+  },
+  methods: {
+    edit() {
+      console.log(111);
+      this.dialogVisible = true;
+      Object.keys(this.form).forEach(key => {
+        this.form[key] = this[key];
+      });
+    },
+    handleClose(tag) {
+      this.form.interests.splice(this.form.interests.indexOf(tag), 1);
+    },
+
+    showInput() {
+      this.inputVisible = true;
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus();
+      });
+    },
+
+    handleInputConfirm() {
+      let inputValue = this.inputValue;
+      if (inputValue) {
+        this.form.interests.push(inputValue);
+      }
+      this.inputVisible = false;
+      this.inputValue = "";
+    },
+    handleEdit(confirm) {
+      if (confirm) {
+      } else {
+      }
+      this.dialogVisible = false;
+    },
+    handleAvatarPreview(file) {
+      console.log(file);
+    }
   }
 };
 </script>
 
 <style scoped lang="scss">
 $themeColor: rgb(0, 219, 110);
+
+.edit-dialog .el-dialog__header{
+    background-color: #404040;
+}
+
+.el-tag + .el-tag {
+  margin-left: 10px;
+}
+.button-new-tag {
+  margin-left: 10px;
+  height: 32px;
+  line-height: 30px;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.input-new-tag {
+  width: 90px;
+  margin-left: 10px;
+  vertical-align: bottom;
+}
 
 .container {
   max-width: 100vw;
@@ -124,6 +247,30 @@ $themeColor: rgb(0, 219, 110);
   overflow: hidden;
   display: flex;
   justify-content: space-around;
+}
+
+.img-upload-cover {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  top: 0;
+  font-size: 4em;
+  line-height: 3.5em;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  opacity: 0;
+  transition: 0.3s all;
+}
+
+.img-upload-cover:hover {
+  opacity: 1;
+}
+
+.avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
 }
 .userinfo {
   z-index: 222;
@@ -135,12 +282,6 @@ $themeColor: rgb(0, 219, 110);
   flex-direction: column;
   align-items: center;
   padding: 30px;
-
-  img {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-  }
   .info {
     margin-top: 50px;
     width: 70%;
@@ -158,6 +299,10 @@ $themeColor: rgb(0, 219, 110);
       margin-top: 10px;
       font-size: 0.8rem;
       color: $themeColor;
+    }
+    .edit:hover {
+      cursor: pointer;
+      text-decoration: underline;
     }
     .following {
       color: #cfcfcf;

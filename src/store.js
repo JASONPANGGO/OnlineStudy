@@ -6,11 +6,12 @@ export let store = Vue.observable({
   appSlogan: "Build intelligent apps of the future",
   themeColor: "rgb(0, 219, 110)",
   userinfo: {
-    name: "",
-    account: "",
-    avatarUrl: "",
+    name: "JasonPang",
+    account: "jason_pang@126.com",
+    avatarUrl: "http://placehold.it/200x200",
     following: 0,
-    interests: ["JavaScript", "TypeScript", "Vue", "NodeJS"]
+    interests: ["JavaScript", "TypeScript", "Vue", "NodeJS"],
+    gender: "male"
   }
 });
 

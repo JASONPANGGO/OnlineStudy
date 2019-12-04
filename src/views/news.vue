@@ -12,20 +12,22 @@
       </el-carousel-item>
     </el-carousel>
     <div class="carousel-title">最新文章</div>
-    <el-card v-for="item in 6" :key="item">
-      <div slot="header">
-        <span class="news-title">title</span>
-      </div>
-      <div class="news-content-layer">
-        <div class="news-content-layer_content">
-          contentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentntentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentntentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontentcontent
+
+    <router-link v-for="item in dailyNews" :key="item.id" :to="'/newsdetail/'+item.id">
+      <el-card>
+        <div slot="header">
+          <span class="news-title">{{item.title}}</span>
         </div>
-        <div class="news-content-layer_left-aside">
-          <div>javascript</div>
-          <span>2019.01</span>
+        <div class="news-content-layer">
+          <div class="news-content-layer_content">{{item.content}}</div>
+          <div class="news-content-layer_left-aside">
+            <div>{{item.author}}</div>
+            <span>{{item.date}}</span>
+          </div>
         </div>
-      </div>
-    </el-card>
+      </el-card>
+    </router-link>
+
     <div class="block">
       <el-pagination
         layout="prev, pager, next"
@@ -35,6 +37,51 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  name: "home",
+  data() {
+    return {
+      dailyNews: [
+        {
+          id: "ed23r34tfr34rvr2",
+          title: "titletitletitle",
+          content:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam exercitationem labore esse facilis dolores, omnis quas similique. Reprehenderit fugit delectus provident in quasi iusto nobis consequuntur corrupti, placeat officia quae.",
+          author: "author",
+          date: "2019.01"
+        },
+        {
+          id: "gtryhrtgete312e",
+          title: "titletitletitle",
+          content:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam exercitationem labore esse facilis dolores, omnis quas similique. Reprehenderit fugit delectus provident in quasi iusto nobis consequuntur corrupti, placeat officia quae.",
+          author: "author",
+          date: "2019.01"
+        },
+        {
+          id: "12er434hytju6756",
+          title: "titletitletitle",
+          content:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam exercitationem labore esse facilis dolores, omnis quas similique. Reprehenderit fugit delectus provident in quasi iusto nobis consequuntur corrupti, placeat officia quae.",
+          author: "author",
+          date: "2019.01"
+        },
+        {
+          id: "12ed2343t56j787k7",
+          title: "titletitletitle",
+          content:
+            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam exercitationem labore esse facilis dolores, omnis quas similique. Reprehenderit fugit delectus provident in quasi iusto nobis consequuntur corrupti, placeat officia quae.",
+          author: "author",
+          date: "2019.01"
+        }
+      ]
+    };
+  }
+};
+</script>
+
 <style lang="scss" scoped>
 .news-outer {
   position: absolute;
@@ -65,7 +112,7 @@
       box-shadow: 5px 5px 10px #000000;
     }
 
-    transition: opacity 2s, box-shadow 1s;
+    transition: opacity 1s, box-shadow 1s;
     background: rgba(129, 129, 129, 0.356);
     color: rgb(2, 2, 2);
     margin: 8px 0;

@@ -26,10 +26,10 @@
       <el-popover placement="bottom" width="200" trigger="click">
         <el-menu>
           <el-menu-item>
-            <span slot="title">
+            <router-link :to="'/userinfo'" slot="title">
               <i class="el-icon-setting"></i>
               account setting
-            </span>
+            </router-link>
           </el-menu-item>
           <el-menu-item>
             <el-button slot="title" @click="signout" type="text">

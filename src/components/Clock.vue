@@ -26,7 +26,7 @@ export default {
   },
   computed: {},
   mounted() {
-    this.countdownStart();
+    // this.countdownStart();
   },
   destroyed() {},
   methods: {
