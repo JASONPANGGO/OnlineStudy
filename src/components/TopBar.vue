@@ -4,12 +4,7 @@
       <div class="logo">
         <i class="el-icon-search"></i>
       </div>
-      <input
-        class="input"
-        type="text"
-        placeholder="what do you want to learn?"
-        @click="onSearch"
-      />
+      <input class="input" type="text" placeholder="what do you want to learn?" @click="onSearch" />
 
       <router-link to="/userinfo">
         <div class="info">
@@ -26,15 +21,27 @@
       <el-popover placement="bottom" width="200" trigger="click">
         <el-menu>
           <el-menu-item>
+            <router-link to="/publishnews" slot="title">
+              <i class="el-icon-s-opportunity"></i>
+              Publish News
+            </router-link>
+          </el-menu-item>
+          <el-menu-item>
+            <router-link to="/createnewclass" slot="title">
+              <i class="el-icon-s-promotion"></i>
+              Create Class
+            </router-link>
+          </el-menu-item>
+          <el-menu-item>
             <router-link :to="'/userinfo'" slot="title">
               <i class="el-icon-setting"></i>
-              account setting
+              Account Setting
             </router-link>
           </el-menu-item>
           <el-menu-item>
             <el-button slot="title" @click="signout" type="text">
               <i class="el-icon-d-arrow-right"></i>
-              sign out
+              Sign Out
             </el-button>
           </el-menu-item>
         </el-menu>

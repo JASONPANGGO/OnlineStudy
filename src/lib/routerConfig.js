@@ -23,6 +23,12 @@ export default {
       component: () => import("../views/news.vue")
     },
     {
+      path: "/newsdetail/:id",
+      name: 'newsdetail',
+      component: () => import("../views/NewsDetail.vue"),
+      
+    },
+    {
       path: "/about",
       name: "about",
       // route level code-splitting
@@ -61,6 +67,16 @@ export default {
       path: "/videoplay",
       name: "videoplay",
       component: () => import("../components/videoPlayer.vue")
+    },
+    {
+      path: '/publishnews',
+      name: 'publishnews',
+      component: () => import("../views/PublishNews.vue")
+    },
+    {
+      path:'/createnewclass',
+      name:'createnewclass',
+      component: ()=>import("../components/createNewClass.vue")
     }
   ]
 };
