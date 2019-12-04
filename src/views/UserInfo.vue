@@ -5,8 +5,8 @@
       <div class="userinfo">
         <img class="avatar" :src="avatarUrl" alt />
         <div class="info">
-          <span class="name">{{name}}</span>
-          <span class="account">{{account}}</span>
+          <span class="name">{{ userName }}</span>
+          <span class="account">{{ mail }}</span>
           <div class="edit" @click="edit">Edit Profile</div>
           <div class="following">
             <b>{{ following }}</b> following
@@ -19,8 +19,7 @@
                 type="info"
                 v-for="(interest, index) in interests"
                 :key="index"
-                >{{ interest }}</el-tag
-              >
+              >{{ interest }}</el-tag>
             </div>
           </div>
         </div>
@@ -42,8 +41,8 @@
         </div>
       </div>
     </div>
-    <el-dialog title="编辑个人信息" :visible.sync="dialogVisible" class="edit-dialog">
-      <el-form :model="form">
+    <el-dialog title="编辑个人信息" :visible.sync="dialogVisible" class="edit-dialog_diy">
+      <el-form :model="form" :rules="editFormRuler">
         <el-form-item style="display:flex;justify-content:center">
           <el-upload
             action="https://jsonplaceholder.typicode.com/posts/"
@@ -57,18 +56,18 @@
         </el-form-item>
         <el-form-item label="昵称" label-width="160px">
           <el-col :span="18">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="form.userName"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label="性别" label-width="160px">
           <el-radio-group v-model="form.gender">
-            <el-radio :label="'male'">
+            <el-radio label="men">
               <i class="el-icon-male"></i>
             </el-radio>
-            <el-radio :label="'female'">
+            <el-radio label="women">
               <i class="el-icon-female"></i>
             </el-radio>
-            <el-radio :label="'secret'">
+            <el-radio label="secret">
               <i class="el-icon-lock"></i>
             </el-radio>
           </el-radio-group>
@@ -80,7 +79,7 @@
             closable
             :disable-transitions="false"
             @close="handleClose(tag)"
-          >{{tag}}</el-tag>
+          >{{ tag }}</el-tag>
           <el-input
             class="input-new-tag"
             v-if="inputVisible"
@@ -102,7 +101,7 @@
 </template>
 
 <script>
-import { store } from "../store.js";
+import { store, mutations } from "../store.js";
 import VideoItem from "../components/VideoItem.vue";
 import VideoClipBackground from "../components/VideoClipBackground";
 
@@ -113,6 +112,13 @@ export default {
     VideoClipBackground
   },
   data() {
+    var inputRuler = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("输入不能为空"));
+      } else {
+        return callback();
+      }
+    };
     return {
       videos: [
         {
@@ -160,18 +166,19 @@ export default {
       ],
       dialogVisible: false,
       form: {
-        name: "",
+        userName: "",
         gender: "",
         interests: [],
         avatarUrl: ""
       },
+      editFormRuler: { userName: [{ validator: inputRuler }] },
       inputVisible: false,
       inputValue: ""
     };
   },
   computed: {
-    name: () => store.userinfo.name,
-    account: () => store.userinfo.account,
+    userName: () => store.userinfo.userName,
+    mail: () => store.userinfo.mail,
     avatarUrl: () => store.userinfo.avatarUrl,
     following: () => store.userinfo.following,
     interests: () => store.userinfo.interests,
@@ -179,7 +186,6 @@ export default {
   },
   methods: {
     edit() {
-      console.log(111);
       this.dialogVisible = true;
       Object.keys(this.form).forEach(key => {
         this.form[key] = this[key];
@@ -191,7 +197,7 @@ export default {
 
     showInput() {
       this.inputVisible = true;
-      this.$nextTick(_ => {
+      this.$nextTick(() => {
         this.$refs.saveTagInput.$refs.input.focus();
       });
     },
@@ -204,14 +210,42 @@ export default {
       this.inputVisible = false;
       this.inputValue = "";
     },
-    handleEdit(confirm) {
+    async handleEdit(confirm) {
       if (confirm) {
-      } else {
+        // 上传数据
+        // 读取localstorage
+        let token = localStorage.getItem("loginKey");
+        let form = this.form;
+
+        let result = await this.$fetchPost("/user/update", {
+          token,
+          form,
+          option: { returnNewDocument: true }
+        })
+          .then(res => res)
+          .catch(res => res);
+
+        let { message } = result;
+        if (result.status === 200) {
+          if (message.lastErrorObject.n === 1) {
+            // 获取信息
+
+            mutations.setUseinfo(this.form);
+          }
+        } else {
+          // 警告
+          this.$notify({
+            title: "提示",
+            message: ("i", { style: "color: teal" }, "修改信息出错 请重新修改")
+          });
+        }
+        window.console.log(result);
       }
+
       this.dialogVisible = false;
     },
     handleAvatarPreview(file) {
-      console.log(file);
+      window.console.log(file);
     }
   }
 };
@@ -219,10 +253,6 @@ export default {
 
 <style scoped lang="scss">
 $themeColor: rgb(0, 219, 110);
-
-.edit-dialog .el-dialog__header{
-    background-color: #404040;
-}
 
 .el-tag + .el-tag {
   margin-left: 10px;
@@ -273,7 +303,7 @@ $themeColor: rgb(0, 219, 110);
   border-radius: 50%;
 }
 .userinfo {
-  z-index: 222;
+  z-index: 2;
   margin: 10px;
   margin-left: 70px;
   margin-top: 70px;
@@ -328,7 +358,7 @@ $themeColor: rgb(0, 219, 110);
 }
 
 .maininfo {
-  z-index: 222;
+  z-index: 2;
   margin: 10px;
   margin-top: 70px;
   margin-right: 30px;

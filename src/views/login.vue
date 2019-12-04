@@ -56,19 +56,11 @@
           </el-form-item>
 
           <el-form-item label="邮箱" prop="mail">
-            <el-input
-              v-model="registerForm.mail"
-              placeholder="登录时使用的账户名"
-              autocomplete="off"
-            ></el-input>
+            <el-input v-model="registerForm.mail" placeholder="登录时使用的账户名" autocomplete="off"></el-input>
           </el-form-item>
 
           <el-form-item label="用户名" prop="userName">
-            <el-input
-              v-model="registerForm.userName"
-              placeholder="昵称"
-              autocomplete="off"
-            ></el-input>
+            <el-input v-model="registerForm.userName" placeholder="昵称" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="pass">
             <el-input
@@ -91,15 +83,19 @@
           </el-form-item>
           <el-form-item label="性别" prop="gender">
             <el-radio-group v-model="registerForm.gender">
-              <el-radio label="men">men</el-radio>
-              <el-radio label="women">women</el-radio>
-              <el-radio label="secret">Secret</el-radio>
+              <el-radio label="men">
+                <i class="el-icon-female" />
+              </el-radio>
+              <el-radio label="women">
+                <i class="el-icon-male" />
+              </el-radio>
+              <el-radio label="secret">
+                <i class="el-icon-lock" />
+              </el-radio>
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('registerForm')"
-              >注册</el-button
-            >
+            <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
           </el-form-item>
         </el-form>
       </transition>

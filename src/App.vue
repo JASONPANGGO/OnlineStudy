@@ -3,7 +3,7 @@
     <TopBar />
     <Nav></Nav>
     <transition :name="'slide-left'">
-      <router-view class="child-view "></router-view>
+      <router-view class="child-view"></router-view>
     </transition>
   </div>
 </template>
@@ -29,6 +29,29 @@ export default {
 </script>
 
 <style lang="scss">
+.edit-dialog_diy {
+  .el-dialog__header {
+    background-color: #272727fb;
+    .el-dialog__title {
+      color: white;
+    }
+  }
+  background-color: #75757528;
+  .el-dialog__body {
+    .el-radio-group,
+    .el-radio {
+      color: rgb(207, 207, 207);
+    }
+    .el-form-item__label {
+      color: white;
+      .el-icon-female {
+        color: white;
+      }
+    }
+    background-color: #272727e3;
+  }
+}
+
 .child-view {
   transition: opacity 1s, transform 1s;
 }

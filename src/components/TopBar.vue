@@ -4,17 +4,12 @@
       <div class="logo">
         <i class="el-icon-search"></i>
       </div>
-      <input
-        class="input"
-        type="text"
-        placeholder="what do you want to learn?"
-        @click="onSearch"
-      />
+      <input class="input" type="text" placeholder="what do you want to learn?" @click="onSearch" />
 
       <router-link to="/userinfo">
         <div class="info">
           <div class="info-text">
-            <div class="info-name">{{ name }}</div>
+            <div class="info-name">{{ userName }}</div>
             <div class="info-account">{{ account }}</div>
           </div>
           <div class="info-avatar">
@@ -74,7 +69,7 @@ export default {
     }
   },
   computed: {
-    name: () => store.userinfo.name,
+    userName: () => store.userinfo.userName,
     account: () => store.userinfo.account,
     avatarUrl: () => store.userinfo.avatarUrl
   }

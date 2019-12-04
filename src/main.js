@@ -15,11 +15,9 @@ Vue.prototype.$fetchGet = fetchGet;
 
 new Vue({
   router,
-
   render: h => h(App),
   beforeDestroyed: () => {
     localStorage.clear();
     window.console.log("1");
   }
 }).$mount("#app");
-  
