@@ -14,15 +14,34 @@
           </el-row>
         </el-header>
         <el-main class="content markdown-body">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab expedita. Aut culpa, error impedit modi inventore consectetur maiores dolor?
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab expedita. Aut culpa, error impedit modi inventore consectetur maiores dolor?
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab expedita. Aut culpa, error impedit modi inventore consectetur maiores dolor?
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab expedita. Aut culpa, error impedit modi inventore consectetur maiores dolor?
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab expedita. Aut culpa, error impedit modi inventore consectetur maiores dolor?
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab expedita. Aut culpa, error impedit modi inventore consectetur maiores dolor?
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab expedita. Aut culpa, error impedit modi inventore consectetur maiores dolor?
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab expedita. Aut culpa, error impedit modi inventore consectetur maiores dolor?
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab expedita. Aut culpa, error impedit modi inventore consectetur maiores dolor?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel
+          nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
+          expedita. Aut culpa, error impedit modi inventore consectetur maiores
+          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
+          expedita. Aut culpa, error impedit modi inventore consectetur maiores
+          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
+          expedita. Aut culpa, error impedit modi inventore consectetur maiores
+          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
+          expedita. Aut culpa, error impedit modi inventore consectetur maiores
+          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
+          expedita. Aut culpa, error impedit modi inventore consectetur maiores
+          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
+          expedita. Aut culpa, error impedit modi inventore consectetur maiores
+          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
+          expedita. Aut culpa, error impedit modi inventore consectetur maiores
+          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
+          expedita. Aut culpa, error impedit modi inventore consectetur maiores
+          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
+          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
+          expedita. Aut culpa, error impedit modi inventore consectetur maiores
+          dolor?
         </el-main>
       </div>
       <div class="sidebar">
@@ -31,8 +50,8 @@
             <div class="personal">
               <img class="avatar" :src="author.avatarUrl" alt />
               <div class="info">
-                <div class="name">{{author.name}}</div>
-                <div class="job">{{author.job}}</div>
+                <div class="name">{{ author.name }}</div>
+                <div class="job">{{ author.job }}</div>
               </div>
             </div>
             <div class="more">
@@ -60,7 +79,7 @@
                   />
                 </svg>
                 获得点赞
-                {{author.likes}}
+                {{ author.likes }}
               </div>
               <div class="item">
                 <svg
@@ -80,7 +99,7 @@
                   />
                 </svg>
                 关注者
-                {{author.followers}}
+                {{ author.followers }}
               </div>
             </div>
           </div>
@@ -89,10 +108,10 @@
           <h4>相关推荐</h4>
           <div class="list">
             <div class="item" v-for="(item, index) in recommand" :key="index">
-              <div class="title">{{item.title}}</div>
+              <div class="title">{{ item.title }}</div>
               <div class="info">
-                <div class="likes">{{item.likes}}</div>
-                <div class="comments">{{item.comments}}</div>
+                <div class="likes">{{ item.likes }}</div>
+                <div class="comments">{{ item.comments }}</div>
               </div>
             </div>
           </div>
@@ -134,12 +153,12 @@ export default {
           title: "lorem ipsum awdwdw",
           likes: 23,
           comments: 8
-        },
+        }
       ]
     };
   },
   mounted() {
-    console.log(this.$route.params.id);
+    window.console.log(this.$route.params.id);
   }
 };
 </script>
@@ -216,9 +235,8 @@ export default {
     }
     .recommand-container {
       margin-left: 100px;
-      .list{
+      .list {
         width: 100%;
-        
       }
     }
   }
