@@ -239,6 +239,7 @@ export default {
                 if (data.status === 200) {
                   localStorage.setItem("loginKey", token);
                   // mutations.setUseinfo(data);
+                  mutations.setUseinfo(data);
                   this.$router.push("/");
                 } else {
                   this.$notify({

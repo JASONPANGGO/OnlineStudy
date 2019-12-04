@@ -4,13 +4,18 @@
       <div class="logo">
         <i class="el-icon-search"></i>
       </div>
-      <input class="input" type="text" placeholder="what do you want to learn?" @click="onSearch" />
+      <input
+        class="input"
+        type="text"
+        placeholder="what do you want to learn?"
+        @click="onSearch"
+      />
 
       <router-link to="/userinfo">
         <div class="info">
           <div class="info-text">
-            <div class="info-name">{{name}}</div>
-            <div class="info-account">{{account}}</div>
+            <div class="info-name">{{ name }}</div>
+            <div class="info-account">{{ account }}</div>
           </div>
           <div class="info-avatar">
             <img :src="avatarUrl" />
@@ -27,10 +32,10 @@
             </span>
           </el-menu-item>
           <el-menu-item>
-            <div :to="'/login'" slot="title" @click="signout">
+            <el-button slot="title" @click="signout" type="text">
               <i class="el-icon-d-arrow-right"></i>
               sign out
-            </div>
+            </el-button>
           </el-menu-item>
         </el-menu>
         <div class="more" slot="reference">
