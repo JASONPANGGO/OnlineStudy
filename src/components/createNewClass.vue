@@ -5,10 +5,15 @@
       <div class="content">
         <div class="aside">
           <i class="el-icon-s-promotion logo"></i>
-
           <p>不好的东西有人分享会很开心，好的东西没人分享也挺无聊的。</p>
         </div>
-        <el-form class="form" ref="form" :model="form" label-width="80px" label-position="top">
+        <el-form
+          class="form"
+          ref="form"
+          :model="form"
+          label-width="80px"
+          label-position="top"
+        >
           <el-form-item label="课程名称">
             <el-input
               class="textarea"
@@ -20,7 +25,7 @@
           </el-form-item>
           <el-form-item label="课程简介">
             <el-input
-              v-model="form.name"
+              v-model="form.introduce"
               type="textarea"
               maxlength="200"
               :autosize="{ minRows: 3, maxRows: 6 }"
@@ -29,11 +34,14 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="课程难度">
-            <el-rate v-model="form.rate"></el-rate>
+            <el-rate v-model="form.level"></el-rate>
+          </el-form-item>
+          <el-form-item label="课程标签">
+            <editTag v-model="form.interests" />
           </el-form-item>
           <el-form-item label="课程详细介绍">
             <el-input
-              v-model="form.name"
+              v-model="form.content"
               type="textarea"
               resize="none"
               placeholder="课程详细介绍"
@@ -44,26 +52,37 @@
             <el-upload
               class="upload-demo"
               drag
-              action="https://jsonplaceholder.typicode.com/posts/"
-              multiple
+              :data="{
+                classId
+              }"
+              ref="uploadFile"
+              :limit="1"
+              :auto-upload="false"
+              action="http://www.gdutrex.top:8080/class/file"
+              :multiple="false"
             >
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">
                 将文件拖到此处，或
                 <em>点击上传</em>
               </div>
-              <div class="el-upload__tip" slot="tip">只能上传zip文件，且不超过5000kb</div>
+              <div class="el-upload__tip" slot="tip">
+                只能上传zip文件，且不超过5mb
+              </div>
             </el-upload>
           </el-form-item>
           <el-form-item label="视频文件" class="form-video">
             <el-button :round="true" @click="uploadVideo">添加课程</el-button>
             <div class="form-video-list">
-              <videoItem v-model="form.video"></videoItem>
+              <videoItem
+                v-model="form.videoList"
+                :classId="classId"
+              ></videoItem>
             </div>
           </el-form-item>
           <el-form-item class="form-button">
-            <el-button :round="true">确认</el-button>
-            <el-button :round="true">取消</el-button>
+            <el-button :round="true" @click="submit">确认</el-button>
+            <el-button :round="true" @click="goBack">取消</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -73,13 +92,21 @@
 <script>
 import introBgImg from "../components/introBgWithIma.vue";
 import videoItem from "../components/videoDraggable";
+import editTag from "./editTag";
+import { store } from "../store";
 export default {
   components: {
     introBgImg,
-    videoItem
+    videoItem,
+    editTag
+  },
+  mounted() {
+    let id = store.userinfo.mail + new Date().getTime();
+    this.classId = id;
   },
   data() {
     return {
+      classId: "",
       colors: [
         {
           number: 1,
@@ -102,17 +129,22 @@ export default {
       ],
       form: {
         name: "",
-        rate: 0,
-        video: [
+        introduce: "",
+        level: 0,
+        interests: ["stet"],
+        content: "",
+        videoList: [
           {
             url: "",
             key: "videoList000",
-            name: ""
+            name: "",
+            uploadId: ""
           },
           {
             url: "",
             key: "videoList001",
-            name: ""
+            name: "",
+            uploadId: ""
           }
         ]
       }
@@ -120,15 +152,18 @@ export default {
   },
   methods: {
     uploadVideo(res) {
-      this.form.video.push({
+      this.form.videoList.push({
         url: "",
-        key: "videoList" + Math.random() * 1000 * this.form.video.length,
+        key: "videoList" + this.form.videoList.length + 1,
         name: ""
       });
       window.console.log(res);
     },
+    submit() {
+      this.$refs.uploadFile.submit();
+    },
     goBack() {
-      window.console.log("go back");
+      this.$router.push("/");
     }
   }
 };
