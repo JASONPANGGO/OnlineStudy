@@ -290,8 +290,10 @@ export default {
           transition: 0.3s all;
           padding-top: 5px;
           padding-left: 5px;
+          border-radius: 5px;
           &:hover {
-            background-color: #444444;
+            background-color: #222222;
+            color: white;
           }
           .title {
             width: 100%;

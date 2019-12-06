@@ -4,12 +4,7 @@
       <div class="logo">
         <i class="el-icon-search"></i>
       </div>
-      <input
-        class="input"
-        type="text"
-        placeholder="what do you want to learn?"
-        @click="onSearch"
-      />
+      <input class="input" type="text" placeholder="what do you want to learn?" @click="onSearch" />
 
       <router-link to="/userinfo">
         <div class="info">
@@ -191,10 +186,9 @@ export default {
   height: 60px;
   padding-left: 10px;
   padding-right: 10px;
-  width: 160px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-end;
   justify-content: center;
 }
 
