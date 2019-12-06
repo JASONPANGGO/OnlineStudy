@@ -90,7 +90,6 @@ export default {
   left: 0;
   right: 0;
   width: 85%;
-  background: #77777757;
   color: white;
   margin: auto;
   .el-carousel {
@@ -147,9 +146,10 @@ export default {
   }
 }
 .carousel-title {
+  margin-top: 20px;
   padding: 10px 0;
   font-size: 1.5em;
-  border-bottom: 2px solid rgb(180, 211, 195);
+  // border-bottom: 1px solid rgb(209, 209, 209);
   width: 5em;
 }
 .el-carousel__item:nth-child(2n) {

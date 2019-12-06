@@ -17,7 +17,7 @@ export let store = Vue.observable({
 
 export let mutations = {
   setUseinfo(userInfo) {
-    let { interests, following, avatarUrl, userName, mail, gender } = userInfo;
+    const { interests, following, avatarUrl, userName, mail, gender } = userInfo;
     store.userinfo.mail = mail ? mail : store.userinfo.mail;
     store.userinfo.interests = interests ? interests : store.userinfo.interests;
     store.userinfo.followin = following;
