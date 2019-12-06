@@ -1,6 +1,12 @@
 <template>
   <div id="login">
-    <video src="../assets/Video_1.mp4" autoplay loop muted class="video-clip"></video>
+    <video
+      src="../assets/Video_1.mp4"
+      autoplay
+      loop
+      muted
+      class="video-clip"
+    ></video>
     <div class="video-marsk">
       <div class="video-marsk-font">
         <i class="el-icon-s-promotion"></i>
@@ -26,10 +32,19 @@
             <el-input v-model="loginForm.mail" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="pass">
-            <el-input type="password" v-model="loginForm.pass" autocomplete="off"></el-input>
+            <el-input
+              type="password"
+              v-model="loginForm.pass"
+              autocomplete="off"
+            ></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('loginForm')">登陆</el-button>
+            <el-button
+              type="primary"
+              @click="submitForm('loginForm')"
+              @keyup.enter.native="submitForm('loginForm')"
+              >登陆</el-button
+            >
             <el-button @click="registerChange('register')">注册</el-button>
           </el-form-item>
         </el-form>
@@ -49,18 +64,27 @@
             type="text"
             @click="registerChange('login')"
             class="back-login"
-          >返回登陆</el-button>
+            >返回登陆</el-button
+          >
 
           <el-form-item>
             <span>注册</span>
           </el-form-item>
 
           <el-form-item label="邮箱" prop="mail">
-            <el-input v-model="registerForm.mail" placeholder="登录时使用的账户名" autocomplete="off"></el-input>
+            <el-input
+              v-model="registerForm.mail"
+              placeholder="登录时使用的账户名"
+              autocomplete="off"
+            ></el-input>
           </el-form-item>
 
           <el-form-item label="用户名" prop="userName">
-            <el-input v-model="registerForm.userName" placeholder="昵称" autocomplete="off"></el-input>
+            <el-input
+              v-model="registerForm.userName"
+              placeholder="昵称"
+              autocomplete="off"
+            ></el-input>
           </el-form-item>
           <el-form-item label="密码" prop="pass">
             <el-input
@@ -79,7 +103,11 @@
             ></el-input>
           </el-form-item>
           <el-form-item label="出生日期" prop="birthday">
-            <el-date-picker v-model="registerForm.birthday" type="date" placeholder="选择日期"></el-date-picker>
+            <el-date-picker
+              v-model="registerForm.birthday"
+              type="date"
+              placeholder="选择日期"
+            ></el-date-picker>
           </el-form-item>
           <el-form-item label="性别" prop="gender">
             <el-radio-group v-model="registerForm.gender">
@@ -95,7 +123,9 @@
             </el-radio-group>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('registerForm')">注册</el-button>
+            <el-button type="primary" @click="submitForm('registerForm')"
+              >注册</el-button
+            >
           </el-form-item>
         </el-form>
       </transition>

@@ -3,17 +3,17 @@
     <img :src="imgSrc" alt />
     <div class="info">
       <!-- <div class="title">{{title}}</div> -->
-      <div class="title">{{title}}</div>
+      <div class="title">{{ title }}</div>
       <i
         class="el-icon-video-play play"
         @mouseenter="hover('1')"
-        :style="{opacity:togglePlayButton}"
+        :style="{ opacity: togglePlayButton }"
       ></i>
       <div class="author-and-star">
-        <div class="author">{{author}}</div>
+        <div class="author">{{ author }}</div>
         <div class="star">
           <i class="el-icon-star-on"></i>
-          {{star}}
+          {{ star }}
         </div>
       </div>
     </div>

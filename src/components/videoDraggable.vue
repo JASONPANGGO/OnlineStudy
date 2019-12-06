@@ -1,26 +1,68 @@
 <template>
-  <draggable
-    @end="end"
-    v-model="drag_videolist"
-    v-bind="{group:'people',animation:150,ghostClass:'sortable-ghost',chosenClass:'chosenClass',scroll:true,scrollSensitivity:200}"
-  >
-    <transition-group>
-      <div v-for="(item,index) in videolist" :key="item.key" class="video-list_item">
-        <span>{{index+1}}. 视频名称</span>
-        <el-input placeholder="请输入视频文件名" v-model="item.name"></el-input>
-        <span>{{item.url}}</span>
-        <div class="video-list_item_btn">
-          <el-button type="text" @click="deleteItem(index)">删除</el-button>
-          <el-button type="text" @click="move(index,'up')" v-show="index!==0">上移</el-button>
-          <el-button type="text" @click="move(index,'down')" v-show="index!==videolist.length-1">下移</el-button>
+  <div>
+    <draggable
+      @end="end"
+      v-model="drag_videolist"
+      v-bind="{
+        group: 'people',
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        chosenClass: 'chosenClass',
+        scroll: true,
+        scrollSensitivity: 200
+      }"
+    >
+      <transition-group>
+        <div
+          v-for="(item, index) in videolist"
+          :key="item.key"
+          class="video-list_item"
+        >
+          <span>{{ index + 1 }}. 视频名称</span>
+          <el-input
+            placeholder="请输入视频文件名"
+            v-model="item.name"
+          ></el-input>
+          <span>{{ item.url }}</span>
+          <div class="video-list_item_btn">
+            <el-button type="text" @click="deleteItem(index)">删除</el-button>
+            <el-button
+              type="text"
+              @click="move(index, 'up')"
+              v-show="index !== 0"
+              >上移</el-button
+            >
+            <el-button
+              type="text"
+              @click="move(index, 'down')"
+              v-show="index !== videolist.length - 1"
+              >下移</el-button
+            >
+          </div>
+          <el-upload
+            :ref="item.key"
+            :data="{
+              classId,
+              videoName: item.name
+            }"
+            :multiple="false"
+            type="text"
+            action="http://www.gdutrex.top:8080/class/video"
+            :limit="1"
+            :before-upload="beforeUpload(index)"
+            class="upload-demo"
+            :auto-upload="false"
+          >
+            <i class="el-icon-upload"></i>
+            上传视频
+          </el-upload>
         </div>
-        <el-upload type="text" action="11" :limit="1" class="upload-demo">
-          <i class="el-icon-upload"></i>
-          上传视频
-        </el-upload>
-      </div>
-    </transition-group>
-  </draggable>
+      </transition-group>
+    </draggable>
+    <div class="btn">
+      <el-button :round="true" @click="submit">确定</el-button>
+    </div>
+  </div>
 </template>
 <script>
 import draggable from "vuedraggable";
@@ -41,6 +83,7 @@ export default {
       }
     */
 
+    classId: String,
     videolist: {
       type: Array
     }
@@ -53,6 +96,20 @@ export default {
     draggable
   },
   methods: {
+    submit() {},
+    beforeUpload(index) {
+      return file => {
+        window.console.log(index, file);
+      };
+      //  window.console.log(file);
+      // if (this.videolist[index].name === "") {
+      //   this.$notify({
+      //     title: "提示",
+      //     message: ("i", { style: "color: teal" }, "请输入视频文件名")
+      //   });
+      //   return false;
+      // }
+    },
     deleteItem(index) {
       let list = this.videolist
         .slice(0, index)
@@ -86,6 +143,19 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.btn {
+  .el-button {
+    color: rgb(253, 253, 253);
+    background: #2c2c2c;
+    transition: all 0.5s;
+    border: none;
+    &:hover {
+      transition: all 0.5s;
+      background: #969696;
+      color: rgb(0, 0, 0);
+    }
+  }
+}
 .video-list_item {
   display: flex;
   flex-direction: row;
