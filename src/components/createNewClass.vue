@@ -7,13 +7,7 @@
           <i class="el-icon-s-promotion logo"></i>
           <p>不好的东西有人分享会很开心，好的东西没人分享也挺无聊的。</p>
         </div>
-        <el-form
-          class="form"
-          ref="form"
-          :model="form"
-          label-width="80px"
-          label-position="top"
-        >
+        <el-form class="form" ref="form" :model="form" label-width="80px" label-position="top">
           <el-form-item label="课程名称">
             <el-input
               class="textarea"
@@ -66,18 +60,14 @@
                 将文件拖到此处，或
                 <em>点击上传</em>
               </div>
-              <div class="el-upload__tip" slot="tip">
-                只能上传zip文件，且不超过5mb
-              </div>
+              <div class="el-upload__tip" slot="tip">只能上传zip文件，且不超过5mb</div>
             </el-upload>
           </el-form-item>
           <el-form-item label="视频文件" class="form-video">
             <el-button :round="true" @click="uploadVideo">添加课程</el-button>
             <div class="form-video-list">
-              <videoItem
-                v-model="form.videoList"
-                :classId="classId"
-              ></videoItem>
+              <videoItem v-model="form.videoList" :classId="classId"></videoItem>
+              {{form.videoList}}
             </div>
           </el-form-item>
           <el-form-item class="form-button">

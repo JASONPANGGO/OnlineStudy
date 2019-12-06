@@ -13,45 +13,32 @@
       }"
     >
       <transition-group>
-        <div
-          v-for="(item, index) in videolist"
-          :key="item.key"
-          class="video-list_item"
-        >
+        <div v-for="(item, index) in videolist" :key="item.key" class="video-list_item">
           <span>{{ index + 1 }}. 视频名称</span>
-          <el-input
-            placeholder="请输入视频文件名"
-            v-model="item.name"
-          ></el-input>
-          <span>{{ item.url }}</span>
+          <el-input placeholder="请输入视频文件名" v-model="item.name"></el-input>
+
           <div class="video-list_item_btn">
             <el-button type="text" @click="deleteItem(index)">删除</el-button>
-            <el-button
-              type="text"
-              @click="move(index, 'up')"
-              v-show="index !== 0"
-              >上移</el-button
-            >
+            <el-button type="text" @click="move(index, 'up')" v-show="index !== 0">上移</el-button>
             <el-button
               type="text"
               @click="move(index, 'down')"
               v-show="index !== videolist.length - 1"
-              >下移</el-button
-            >
+            >下移</el-button>
           </div>
           <el-upload
             :ref="item.key"
-            :data="{
-              classId,
-              videoName: item.name
-            }"
+            :data=" {
+                classId: classId,
+                videoName: uploadId
+              }"
             :multiple="false"
             type="text"
             action="http://www.gdutrex.top:8080/class/video"
             :limit="1"
             :before-upload="beforeUpload(index)"
             class="upload-demo"
-            :auto-upload="false"
+            :auto-upload="true"
           >
             <i class="el-icon-upload"></i>
             上传视频
@@ -59,16 +46,17 @@
         </div>
       </transition-group>
     </draggable>
-    <div class="btn">
+    <!-- <div class="btn">
       <el-button :round="true" @click="submit">确定</el-button>
-    </div>
+    </div>-->
   </div>
 </template>
 <script>
 import draggable from "vuedraggable";
+
 export default {
   data() {
-    return { state1: "", drag_videolist: [] };
+    return { state1: "", drag_videolist: [], uploadId: "" };
   },
 
   created() {
@@ -84,6 +72,7 @@ export default {
     */
 
     classId: String,
+
     videolist: {
       type: Array
     }
@@ -98,19 +87,43 @@ export default {
   methods: {
     submit() {},
     beforeUpload(index) {
-      return file => {
-        window.console.log(index, file);
+      return (file, fileList) => {
+        // 保证id有数值
+        this.uploadId = file.uid;
+
+        return new Promise((res, rej) => {
+          if (this.videolist[index].name === "") {
+            this.$notify({
+              title: "提示",
+              message: ("i", { style: "color: teal" }, "请输入视频文件名")
+            });
+            rej();
+          } else {
+            let newList = this.videolist.slice(0);
+            newList[index].uploadId = file.uid;
+            let type = file.type.split("/").pop();
+            newList[
+              index
+            ].url = `http://www.gdutrex.top:8080/video/${this.classId}/${file.uid}.${type}`;
+            window.console.log(file, fileList);
+            this.$emit("parent-event", newList);
+            this.$nextTick(() => res());
+          }
+        });
       };
       //  window.console.log(file);
-      // if (this.videolist[index].name === "") {
-      //   this.$notify({
-      //     title: "提示",
-      //     message: ("i", { style: "color: teal" }, "请输入视频文件名")
-      //   });
-      //   return false;
-      // }
     },
-    deleteItem(index) {
+    async deleteItem(index) {
+      let result;
+      if (this.videolist[index].uploadId !== "") {
+        result = await this.$fetchDelete(
+          `/class/video/${this.classId}/${this.videolist[index].url
+            .split("/")
+            .pop()}`
+        );
+      }
+
+      window.console.log(result);
       let list = this.videolist
         .slice(0, index)
         .concat(this.videolist.slice(index + 1));
