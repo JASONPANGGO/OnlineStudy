@@ -67,7 +67,6 @@
             <el-button :round="true" @click="uploadVideo">添加课程</el-button>
             <div class="form-video-list">
               <videoItem v-model="form.videoList" :classId="classId"></videoItem>
-              {{form.videoList}}
             </div>
           </el-form-item>
           <el-form-item class="form-button">

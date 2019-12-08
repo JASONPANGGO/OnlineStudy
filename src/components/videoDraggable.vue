@@ -33,6 +33,7 @@
                 videoName: uploadId
               }"
             :multiple="false"
+            :on-remove="deleteFile(index)"
             type="text"
             action="http://www.gdutrex.top:8080/class/video"
             :limit="1"
@@ -90,7 +91,6 @@ export default {
       return (file, fileList) => {
         // 保证id有数值
         this.uploadId = file.uid;
-
         return new Promise((res, rej) => {
           if (this.videolist[index].name === "") {
             this.$notify({
@@ -113,17 +113,28 @@ export default {
       };
       //  window.console.log(file);
     },
+    deleteFile(index) {
+      return () => {
+        let length = this.videolist.length;
+        let list = this.videolist.slice(0, length + 1);
+        list[index].url = "";
+        list[index].uploadId = "";
+        this.$emit("parent-event", list);
+        this.$fetchDelete(
+          `/class/video/${this.classId}/${this.videolist[index].url
+            .split("/")
+            .pop()}`
+        );
+      };
+    },
     async deleteItem(index) {
-      let result;
       if (this.videolist[index].uploadId !== "") {
-        result = await this.$fetchDelete(
+        await this.$fetchDelete(
           `/class/video/${this.classId}/${this.videolist[index].url
             .split("/")
             .pop()}`
         );
       }
-
-      window.console.log(result);
       let list = this.videolist
         .slice(0, index)
         .concat(this.videolist.slice(index + 1));
