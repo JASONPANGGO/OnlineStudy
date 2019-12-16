@@ -29,7 +29,11 @@
             <el-input type="password" v-model="loginForm.pass" autocomplete="off"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="submitForm('loginForm')">登陆</el-button>
+            <el-button
+              type="primary"
+              @click="submitForm('loginForm')"
+              @keyup.enter.native="submitForm('loginForm')"
+            >登陆</el-button>
             <el-button @click="registerChange('register')">注册</el-button>
           </el-form-item>
         </el-form>
@@ -214,7 +218,6 @@ export default {
           } else {
             this.$fetchPost("/register", this.registerForm)
               .then(data => {
-                window.console.log(data);
                 let { token } = data;
                 if (data.status === 200) {
                   localStorage.setItem("loginKey", token);

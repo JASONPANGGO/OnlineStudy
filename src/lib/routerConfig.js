@@ -24,9 +24,9 @@ export default {
     },
     {
       path: "/newsdetail/:id",
-      name: 'newsdetail',
-      component: () => import("../views/NewsDetail.vue"),
-      
+      name: "newsdetail",
+      props: true,
+      component: () => import("../views/NewsDetail.vue")
     },
     {
       path: "/about",
@@ -69,14 +69,14 @@ export default {
       component: () => import("../components/videoPlayer.vue")
     },
     {
-      path: '/publishnews',
-      name: 'publishnews',
+      path: "/publishnews",
+      name: "publishnews",
       component: () => import("../views/PublishNews.vue")
     },
     {
-      path:'/createnewclass',
-      name:'createnewclass',
-      component: ()=>import("../components/createNewClass.vue")
+      path: "/createnewclass",
+      name: "createnewclass",
+      component: () => import("../components/createNewClass.vue")
     }
   ]
 };

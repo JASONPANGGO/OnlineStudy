@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import ElementUI from "element-ui";
 
-import { fetchPost, fetchGet } from "./lib/fetch";
+import { fetchPost, fetchGet, fetchDelete } from "./lib/fetch";
 import "element-ui/lib/theme-chalk/index.css";
 
 import "../node_modules/video.js/dist/video-js.min.css";
@@ -16,6 +16,7 @@ Vue.use(ElementUI);
 Vue.use(mavonEditor);
 Vue.prototype.$fetchPost = fetchPost;
 Vue.prototype.$fetchGet = fetchGet;
+Vue.prototype.$fetchDelete = fetchDelete;
 
 new Vue({
   router,

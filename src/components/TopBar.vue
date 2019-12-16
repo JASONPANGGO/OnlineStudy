@@ -10,7 +10,7 @@
         <div class="info">
           <div class="info-text">
             <div class="info-name">{{ userName }}</div>
-            <div class="info-account">{{ account }}</div>
+            <div class="info-account">{{ mail }}</div>
           </div>
           <div class="info-avatar">
             <img :src="avatarUrl" />
@@ -82,7 +82,7 @@ export default {
   },
   computed: {
     userName: () => store.userinfo.userName,
-    account: () => store.userinfo.account,
+    mail: () => store.userinfo.mail,
     avatarUrl: () => store.userinfo.avatarUrl
   }
 };
@@ -186,13 +186,14 @@ export default {
   height: 60px;
   padding-left: 10px;
   padding-right: 10px;
-  text-align: right;
   display: flex;
   flex-direction: column;
+  align-items: flex-end;
   justify-content: center;
 }
 
 .info-name {
+  text-align: center;
   color: white;
   font-size: 0.9rem;
 }

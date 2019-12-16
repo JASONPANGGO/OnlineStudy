@@ -1,39 +1,34 @@
 <template>
-  <div class="news-outer ">
+  <div class="news-outer">
     <div class="carousel-title">今日推荐</div>
-    <el-carousel
-      :interval="4000"
-      type="card"
-      height="200px"
-      indicator-position="none"
-    >
+    <el-carousel :interval="4000" type="card" height="200px" indicator-position="none">
       <el-carousel-item v-for="item in 6" :key="item">
         <h3 class="medium">{{ item }}</h3>
       </el-carousel-item>
     </el-carousel>
     <div class="carousel-title">最新文章</div>
 
-    <router-link v-for="item in dailyNews" :key="item.id" :to="'/newsdetail/'+item.id">
+    <router-link
+      v-for="item in dailyNews"
+      :key="item.newsId"
+      :to="{ name: 'newsdetail', params: { id: item.newsId}}"
+    >
       <el-card>
         <div slot="header">
-          <span class="news-title">{{item.title}}</span>
+          <span class="news-title">{{item.form.title}}</span>
         </div>
         <div class="news-content-layer">
-          <div class="news-content-layer_content">{{item.content}}</div>
+          <div class="news-content-layer_content">{{item.form.content}}</div>
           <div class="news-content-layer_left-aside">
-            <div>{{item.author}}</div>
-            <span>{{item.date}}</span>
+            <div>{{item.form.userName}}</div>
+            <span>{{item.form.type}}</span>
           </div>
         </div>
       </el-card>
     </router-link>
 
     <div class="block">
-      <el-pagination
-        layout="prev, pager, next"
-        :total="50"
-        :background="true"
-      ></el-pagination>
+      <el-pagination layout="prev, pager, next" :total="50" :background="true"></el-pagination>
     </div>
   </div>
 </template>
@@ -41,42 +36,13 @@
 <script>
 export default {
   name: "home",
+  async mounted() {
+    // 获取news
+    this.dailyNews = await this.$fetchGet("/newsList").then(res => res);
+  },
   data() {
     return {
-      dailyNews: [
-        {
-          id: "ed23r34tfr34rvr2",
-          title: "titletitletitle",
-          content:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam exercitationem labore esse facilis dolores, omnis quas similique. Reprehenderit fugit delectus provident in quasi iusto nobis consequuntur corrupti, placeat officia quae.",
-          author: "author",
-          date: "2019.01"
-        },
-        {
-          id: "gtryhrtgete312e",
-          title: "titletitletitle",
-          content:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam exercitationem labore esse facilis dolores, omnis quas similique. Reprehenderit fugit delectus provident in quasi iusto nobis consequuntur corrupti, placeat officia quae.",
-          author: "author",
-          date: "2019.01"
-        },
-        {
-          id: "12er434hytju6756",
-          title: "titletitletitle",
-          content:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam exercitationem labore esse facilis dolores, omnis quas similique. Reprehenderit fugit delectus provident in quasi iusto nobis consequuntur corrupti, placeat officia quae.",
-          author: "author",
-          date: "2019.01"
-        },
-        {
-          id: "12ed2343t56j787k7",
-          title: "titletitletitle",
-          content:
-            "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quisquam exercitationem labore esse facilis dolores, omnis quas similique. Reprehenderit fugit delectus provident in quasi iusto nobis consequuntur corrupti, placeat officia quae.",
-          author: "author",
-          date: "2019.01"
-        }
-      ]
+      dailyNews: []
     };
   }
 };
@@ -90,7 +56,6 @@ export default {
   left: 0;
   right: 0;
   width: 85%;
-  background: #77777757;
   color: white;
   margin: auto;
   .el-carousel {
@@ -147,9 +112,10 @@ export default {
   }
 }
 .carousel-title {
+  margin-top: 20px;
   padding: 10px 0;
   font-size: 1.5em;
-  border-bottom: 2px solid rgb(180, 211, 195);
+  // border-bottom: 1px solid rgb(209, 209, 209);
   width: 5em;
 }
 .el-carousel__item:nth-child(2n) {
