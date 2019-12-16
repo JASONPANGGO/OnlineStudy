@@ -4,21 +4,13 @@
       <h2>发布新闻</h2>
     </el-header>
     <el-main class="main">
-      <mavon-editor
-        style="width:80%;height:700px;z-index:0"
-        @change="getHTML"
-      ></mavon-editor>
+      <mavon-editor style="width:80%;height:700px;z-index:0" @change="getHTML"></mavon-editor>
       <div class="news-config">
-        <el-form :label-position="'top'">
-          <el-form-item label="标题">
-            <input
-              v-model="news.title"
-              placeholder="请输入标题..."
-              type="text"
-              class="input"
-            />
+        <el-form :label-position="'top'" ref="form" :rules="rules" :model="news">
+          <el-form-item label="标题" prop="title">
+            <input v-model="news.title" placeholder="请输入标题..." type="text" class="input" />
           </el-form-item>
-          <el-form-item label="分类">
+          <el-form-item label="分类" prop="type">
             <div class="config-item">
               <el-tag
                 class="tag"
@@ -27,8 +19,7 @@
                 type="info"
                 :effect="news.type === type ? 'plain' : 'dark'"
                 @click="onSelect('type', type)"
-                >{{ type }}</el-tag
-              >
+              >{{ type }}</el-tag>
             </div>
           </el-form-item>
           <el-form-item label="标签">
@@ -41,8 +32,7 @@
                 @close="handleClose(tag)"
                 class="tag"
                 :type="tagsColor[index % tagsColor.length]"
-                >{{ tag }}</el-tag
-              >
+              >{{ tag }}</el-tag>
               <el-input
                 class="input-new-tag"
                 v-if="inputVisible"
@@ -52,13 +42,7 @@
                 @keyup.enter.native="handleInputConfirm"
                 @blur="handleInputConfirm"
               ></el-input>
-              <el-button
-                v-else
-                class="button-new-tag"
-                size="small"
-                @click="showInput"
-                >+ New Tag</el-button
-              >
+              <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
             </div>
           </el-form-item>
         </el-form>
@@ -71,9 +55,17 @@
 </template>
 
 <script>
+import { store } from "../store";
 export default {
   name: "PublishNews",
   data() {
+    var inputRuler = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("输入不能为空"));
+      } else {
+        return callback();
+      }
+    };
     return {
       types: [
         "后端",
@@ -82,20 +74,32 @@ export default {
         "Android",
         "算法",
         "运维",
+        "人工智能",
         "测试",
         "设计",
         "生活"
       ],
       tagsColor: ["info", "success", "primary", "warning", "danger"],
       inputVisible: false,
+      rules: {
+        title: [{ validator: inputRuler, trigger: "blur", required: true }],
+        type: [{ validator: inputRuler, trigger: "blur", required: true }]
+      },
       tagInput: "",
+      newsId: "",
       news: {
         title: "",
         type: "",
         tags: [],
-        content: ""
+        content: "",
+        date: "",
+        userName: ""
       }
     };
+  },
+  mounted() {
+    let id = store.userinfo.mail + new Date().getTime();
+    this.newsId = id;
   },
   methods: {
     onSelect(key, value) {
@@ -122,7 +126,23 @@ export default {
       this.news.content = render;
     },
     submit() {
-      window.console.log(this.news);
+      this.$refs["form"].validate(vaild => {
+        if (vaild) {
+          this.news.date = new Date().toString();
+          this.news.userName = store.userinfo.userName;
+          this.$fetchPost("/news", {
+            newsId: this.newsId,
+            token: localStorage.getItem("loginKey"),
+            form: this.news
+          });
+          this.$router.push("/");
+        } else {
+          this.$notify({
+            title: "请将信息输入完全",
+            message: ("i", { style: "color: teal" }, "检查是否存在空的输入框")
+          });
+        }
+      });
     }
   }
 };

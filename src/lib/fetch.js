@@ -38,13 +38,15 @@ let fetchPost = function(url, params) {
       });
   });
 };
-let fetchGet = function(url) {
+let fetchGet = function(url, query = {}) {
   return new Promise((res, rej) => {
-    fetch(`${httpUrl}${url}`, {
+    fetch(`${httpUrl}${url}?query=${JSON.stringify(query)}`, {
       method: "GET",
-      mode: "cors", // 允许发送跨域请求
-      header: {}
+      mode: "cors" // 允许发送跨域请求
     })
+      .then(e => {
+        return e.json();
+      })
       .then(data => {
         res(data);
       })

@@ -6,43 +6,14 @@
           <h2>title</h2>
           <el-row :gutter="50">
             <el-col :span="3" :offset="15">
-              <div class="grid-content bg-purple">author</div>
+              <div class="grid-content bg-purple">{{dailyNews.userName}}</div>
             </el-col>
             <el-col :span="6">
-              <div class="grid-content bg-purple">2019.01</div>
+              <div class="grid-content bg-purple">{{new Date(dailyNews.date).toDateString()}}</div>
             </el-col>
           </el-row>
         </el-header>
-        <el-main class="markdown-body content">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque vel
-          nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
-          expedita. Aut culpa, error impedit modi inventore consectetur maiores
-          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
-          expedita. Aut culpa, error impedit modi inventore consectetur maiores
-          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
-          expedita. Aut culpa, error impedit modi inventore consectetur maiores
-          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
-          expedita. Aut culpa, error impedit modi inventore consectetur maiores
-          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
-          expedita. Aut culpa, error impedit modi inventore consectetur maiores
-          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
-          expedita. Aut culpa, error impedit modi inventore consectetur maiores
-          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
-          expedita. Aut culpa, error impedit modi inventore consectetur maiores
-          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
-          expedita. Aut culpa, error impedit modi inventore consectetur maiores
-          dolor? Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque
-          vel nulla sequi obcaecati nihil explicabo iure adipisci, porro a ab
-          expedita. Aut culpa, error impedit modi inventore consectetur maiores
-          dolor?
-        </el-main>
+        <el-main class="markdown-body content">{{dailyNews.content}}</el-main>
       </div>
       <div class="sidebar">
         <div class="author-container">
@@ -171,6 +142,7 @@ export default {
   props: ["id"],
   data() {
     return {
+      dailyNews: {},
       news: {
         title: "",
         content: ""
@@ -204,8 +176,16 @@ export default {
       ]
     };
   },
-  mounted() {
-    window.console.log(this.$route.params.id);
+  async mounted() {
+    // 获取news
+    var dailyNews = await this.$fetchGet("/newsList", {
+      newsId: this.id
+    }).then(res => res);
+    if (dailyNews.length > 0) {
+      this.dailyNews = dailyNews[0].form;
+    } else {
+      this.$router.push("/");
+    }
   }
 };
 </script>

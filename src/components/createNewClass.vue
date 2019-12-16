@@ -7,8 +7,16 @@
           <i class="el-icon-s-promotion logo"></i>
           <p>不好的东西有人分享会很开心，好的东西没人分享也挺无聊的。</p>
         </div>
-        <el-form class="form" ref="form" :model="form" label-width="80px" label-position="top">
-          <el-form-item label="课程名称">
+        <el-form
+          class="form"
+          ref="form"
+          :rules="rules"
+          :model="form"
+          status-icon
+          label-width="80px"
+          label-position="top"
+        >
+          <el-form-item label="课程名称" prop="name">
             <el-input
               class="textarea"
               v-model="form.name"
@@ -17,7 +25,7 @@
               maxlength="20"
             ></el-input>
           </el-form-item>
-          <el-form-item label="课程简介">
+          <el-form-item label="课程简介" prop="introduce">
             <el-input
               v-model="form.introduce"
               type="textarea"
@@ -27,7 +35,7 @@
               placeholder="课程简介（200字以内）"
             ></el-input>
           </el-form-item>
-          <el-form-item label="课程难度">
+          <el-form-item label="课程难度" prop="level">
             <el-rate v-model="form.level"></el-rate>
           </el-form-item>
           <el-form-item label="课程标签">
@@ -51,7 +59,7 @@
               }"
               ref="uploadFile"
               :limit="1"
-              :auto-upload="false"
+              :auto-upload="true"
               action="http://www.gdutrex.top:8080/class/file"
               :multiple="false"
             >
@@ -70,6 +78,7 @@
             </div>
           </el-form-item>
           <el-form-item class="form-button">
+            {{form}}
             <el-button :round="true" @click="submit">确认</el-button>
             <el-button :round="true" @click="goBack">取消</el-button>
           </el-form-item>
@@ -94,62 +103,71 @@ export default {
     this.classId = id;
   },
   data() {
+    var inputRuler = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error("输入不能为空"));
+      } else {
+        return callback();
+      }
+    };
     return {
+      rules: {
+        name: [{ validator: inputRuler, trigger: "blur", required: true }],
+        introduce: [{ validator: inputRuler, trigger: "blur", required: true }],
+        level: [{ validator: inputRuler, trigger: "blur", required: true }]
+      },
       classId: "",
-      colors: [
-        {
-          number: 1,
-          text: "文本",
-          type: "出现",
-          color: "#5BC7B2"
-        },
-        {
-          number: 1,
-          text: "文本",
-          type: "出现",
-          color: "#007FFF"
-        },
-        {
-          number: 2,
-          text: "文本",
-          type: "出现",
-          color: "#F69B29"
-        }
-      ],
       form: {
         name: "",
         introduce: "",
         level: 0,
-        interests: ["stet"],
+        interests: [],
         content: "",
-        videoList: [
-          {
-            url: "",
-            key: "videoList000",
-            name: "",
-            uploadId: ""
-          },
-          {
-            url: "",
-            key: "videoList001",
-            name: "",
-            uploadId: ""
-          }
-        ]
+        videoList: []
       }
     };
   },
   methods: {
-    uploadVideo(res) {
+    uploadVideo() {
       this.form.videoList.push({
         url: "",
-        key: "videoList" + this.form.videoList.length + 1,
-        name: ""
+        key:
+          "videoList" + (this.form.videoList.length + 1) + Math.random() * 200,
+        name: "",
+        uploadId: ""
       });
-      window.console.log(res);
     },
     submit() {
-      this.$refs.uploadFile.submit();
+      // this.$refs.uploadFile.submit();
+      this.$refs["form"].validate(vaild => {
+        if (vaild) {
+          this.$fetchPost("/class/content", {
+            form: this.form,
+            classId: this.classId,
+            token: localStorage.getItem("loginKey")
+          })
+            .then(res => {
+              window.console.log(res);
+              this.$notify({
+                title: "发布成功",
+                message: ("i", { style: "color: teal" }, "发布成功")
+              });
+              this.$router.push("/");
+            })
+            .catch(res => {
+              window.console.log(res);
+              this.$notify({
+                title: "请求失败",
+                message: ("i", { style: "color: teal" }, "请重新提交")
+              });
+            });
+        } else {
+          this.$notify({
+            title: "请将信息输入完全",
+            message: ("i", { style: "color: teal" }, "检查是否存在空的输入框")
+          });
+        }
+      });
     },
     goBack() {
       this.$router.push("/");
