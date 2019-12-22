@@ -5,20 +5,20 @@
   >
     <div class="inner inner-video-list" v-if="type==='videoList'">
       <div class="font-contain">
-        <div class="title">课程标题</div>
-        <div class="writer">作者</div>
-        <div class="introuce">课程简介</div>
+        <div class="title">{{classInfo.title}}</div>
+        <div class="writer">{{classInfo.userName}}</div>
+        <div class="introuce">{{classInfo.introduce}}</div>
       </div>
       <div class="btn">
-        <el-button
+        <!-- <el-button
           type="primary"
           plain
           native-type="button"
           style="background:#F05A28;"
           icon="el-icon-video-play"
-        >主要按钮</el-button>
+        >主要按钮</el-button>-->
         <el-button type="text" plain native-type="button" icon="el-icon-upload2">附件下载</el-button>
-        <el-button type="text" plain native-type="button" icon="el-icon-star-off">收藏</el-button>
+        <!-- <el-button type="text" plain native-type="button" icon="el-icon-star-off">收藏</el-button> -->
         <div style="flex:1;"></div>
         <el-button type="primary" plain native-type="button" style="background:#F05A28;">编辑课程</el-button>
       </div>
@@ -36,7 +36,20 @@
 </template>
 <script>
 export default {
+  data() {
+    return {
+      classInfo: {}
+    };
+  },
   props: {
+    data: {
+      type: Object,
+      default: () => {
+        return {
+          classInfo: ""
+        };
+      }
+    },
     image: {
       type: String,
       default:
@@ -52,7 +65,12 @@ export default {
     }
   },
   mounted() {
-    window.console.log(this.image);
+    //  window.console.log("class", this.data);
+    this.$nextTick(() => {
+      if (this.data.classInfo !== "") {
+        this.classInfo = this.data.classInfo;
+      }
+    });
   }
 };
 </script>

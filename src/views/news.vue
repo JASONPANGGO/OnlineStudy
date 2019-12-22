@@ -11,19 +11,23 @@
     <router-link
       v-for="item in dailyNews"
       :key="item.newsId"
-      :to="{ name: 'newsdetail', params: { id: item.newsId}}"
+      :to="{ name: 'newsdetail', params: { id: item.newsId,userId:item.userId}}"
     >
       <el-card>
         <div slot="header">
-          <span class="news-title">{{item.form.title}}</span>
+          <span class="news-title">{{item.title}}</span>
         </div>
-        <div class="news-content-layer">
-          <div class="news-content-layer_content">{{item.form.content}}</div>
+        <div class="news-content-layer_left-aside">
+          <div>{{item.userName}}</div>
+          <el-tag class="tag" type="info">{{ item.type }}</el-tag>
+        </div>
+        <!-- <div class="news-content-layer">
+          <div class="news-content-layer_content"></div>
           <div class="news-content-layer_left-aside">
-            <div>{{item.form.userName}}</div>
-            <span>{{item.form.type}}</span>
+            <div>{{item.userName}}</div>
+            <span>{{item.type}}</span>
           </div>
-        </div>
+        </div>-->
       </el-card>
     </router-link>
 
@@ -39,6 +43,7 @@ export default {
   async mounted() {
     // 获取news
     this.dailyNews = await this.$fetchGet("/newsList").then(res => res);
+    window.console.log(this.dailyNews);
   },
   data() {
     return {
@@ -88,27 +93,22 @@ export default {
     font-size: 2em;
     font-weight: 800;
   }
-  .news-content-layer {
+  .tag {
+    margin-left: 10px;
+    background: #ffffff;
+    color: #000000;
+    cursor: pointer;
+    height: 80%;
+    font-size: 1em;
+  }
+  .news-content-layer_left-aside {
+    width: 100%;
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
-
-    .news-content-layer_content {
-      height: 60px;
-      flex: 1;
-      text-overflow: ellipsis;
-      word-break: break-all;
-      word-wrap: break-word;
-    }
-    .news-content-layer_left-aside {
-      width: 100px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-    }
-    .news-content-layer_time {
-      text-align: center;
-    }
+    font-size: 1.5em;
+    font-weight: 300;
+    align-items: center;
   }
 }
 .carousel-title {

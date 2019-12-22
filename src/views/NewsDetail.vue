@@ -1,19 +1,37 @@
 <template>
   <div class="container">
     <el-container class="main-container">
-      <div class="content" style="width:70%">
+      <div class="content content-box-shadow" style="width:70%">
         <el-header>
-          <h2>title</h2>
+          <h1>{{dailyNews.title}}</h1>
           <el-row :gutter="50">
             <el-col :span="3" :offset="15">
-              <div class="grid-content bg-purple">{{dailyNews.userName}}</div>
+              <div class="grid-content bg-purple">
+                作者：
+                <br />
+                {{dailyNews.userName}}
+              </div>
             </el-col>
             <el-col :span="6">
-              <div class="grid-content bg-purple">{{new Date(dailyNews.date).toDateString()}}</div>
+              <div class="grid-content bg-purple">
+                发布时间：
+                <br />
+                {{dailyNews.date}}
+              </div>
             </el-col>
           </el-row>
         </el-header>
-        <el-main class="markdown-body content">{{dailyNews.content}}</el-main>
+        <el-main class="content">
+          <mavon-editor
+            style="width:100%;height:700px;z-index:0;margin:0;"
+            :editable="false"
+            :toolbarsFlag="false"
+            :defaultOpen="'preview'"
+            :subfield="false"
+            :previewBackground="'#afafaf'"
+            :value="dailyNews.content"
+          ></mavon-editor>
+        </el-main>
       </div>
       <div class="sidebar">
         <div class="author-container">
@@ -22,36 +40,12 @@
               <img class="avatar" :src="author.avatarUrl" alt />
               <div class="info">
                 <div class="name">{{ author.name }}</div>
-                <div class="job">{{ author.job }}</div>
+                <div class="job">
+                  <el-button type="info" icon="el-icon-star-on" circle></el-button>
+                </div>
               </div>
             </div>
             <div class="more">
-              <div class="item">
-                <svg
-                  t="1575464387963"
-                  class="icon"
-                  viewBox="0 0 1024 1024"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  p-id="2566"
-                  width="20"
-                  height="20"
-                  style="margin-top:3px"
-                >
-                  <path
-                    d="M884.875894 423.143253 646.970506 423.143253c92.185562-340.464205-63.516616-357.853247-63.516616-357.853247-65.993017 0-52.312436 52.182476-57.3031 60.881602 0 166.502152-176.849824 296.971645-176.849824 296.971645l0 472.171899c0 46.607504 63.516616 63.393819 88.433098 63.393819l357.452111 0c33.641191 0 61.036122-88.224344 61.036122-88.224344 88.434122-300.70569 88.434122-390.177444 88.434122-390.177444C944.657442 418.179195 884.875894 423.143253 884.875894 423.143253L884.875894 423.143253 884.875894 423.143253zM884.875894 423.143253"
-                    p-id="2567"
-                    fill="#bfbfbf"
-                  />
-                  <path
-                    d="M251.671415 423.299819 109.214912 423.299819c-29.420053 0-29.873378 28.89612-29.873378 28.89612l29.420053 476.202703c0 30.309306 30.361495 30.309306 30.361495 30.309306L262.420223 958.707948c25.686009 0 25.458835-20.049638 25.458835-20.049638L287.879058 459.411271C287.879058 422.837284 251.671415 423.299819 251.671415 423.299819L251.671415 423.299819 251.671415 423.299819zM251.671415 423.299819"
-                    p-id="2568"
-                    fill="#bfbfbf"
-                  />
-                </svg>
-                获得点赞
-                {{ author.likes }}
-              </div>
               <div class="item">
                 <svg
                   t="1575465652913"
@@ -139,7 +133,7 @@
 <script>
 export default {
   name: "newsdetail",
-  props: ["id"],
+  props: ["id", "userId"],
   data() {
     return {
       dailyNews: {},
@@ -150,7 +144,7 @@ export default {
       author: {
         name: "Jason Pang",
         avatarUrl: "http://www.gdutrex.top:8080/userimage/men.jpg",
-        job: "前端开发",
+
         likes: 5648,
         followers: 354
       },
@@ -178,11 +172,18 @@ export default {
   },
   async mounted() {
     // 获取news
-    var dailyNews = await this.$fetchGet("/newsList", {
-      newsId: this.id
+    if (typeof this.id === "undefined" || typeof this.userId === "undefined") {
+      this.$router.push("/");
+      return;
+    }
+    var dailyNews = await this.$fetchGet("/newsDetail", {
+      newsId: this.id,
+      userId: this.userId
     }).then(res => res);
-    if (dailyNews.length > 0) {
-      this.dailyNews = dailyNews[0].form;
+
+    if (dailyNews.passage.length > 0) {
+      this.dailyNews = dailyNews.passage[0];
+      this.author = dailyNews.postUser;
     } else {
       this.$router.push("/");
     }
@@ -191,7 +192,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import url("../css/markdown.css");
+// @import url("../css/markdown.css");
+h1 {
+  font-size: 2em;
+}
 .container {
   padding: 150px;
   padding-left: 220px;
@@ -200,22 +204,32 @@ export default {
 .main-container {
   width: 100%;
   display: flex;
+  .content-box-shadow {
+    box-shadow: 10px 15px 10px rgb(82, 82, 82);
+    border-radius: 20px;
+  }
+  .markdown-body-box-shadow {
+    box-shadow: 0 -15px 200px rgba(41, 41, 41, 0.301) inset;
+  }
   .content {
+    padding: 0;
     width: 100%;
     margin-top: 1em;
-    color: #d9d9d9;
+    color: #444444;
+
+    background: #afafaf;
   }
   .sidebar {
     width: 30%;
 
     .author-container {
       width: 100%;
-      height: 260px;
+      height: 230px;
       .author {
         margin-top: 120px;
         margin-left: 100px;
         width: 250px;
-        height: 210px;
+        height: 180px;
         background-color: #232323;
         display: flex;
         flex-direction: column;

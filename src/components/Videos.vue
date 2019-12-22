@@ -2,12 +2,12 @@
 <template>
   <el-container class="about">
     <el-main class="main">
-      <introBgImg :type="'videoList'" />
+      <introBgImg :type="'videoList'" :data="classMes" />
       <panel v-model="btnClick" :panelType="'videoList'" :btnList="btnList">
-        <panelSlot :type1="btnClick"></panelSlot>
+        <panelSlot :type1="btnClick" :videoList1="videoList"></panelSlot>
       </panel>
     </el-main>
-    <leftAside class="aside"></leftAside>
+    <leftAside class="aside" :classAuthor="classAuthor"></leftAside>
   </el-container>
 </template>
 <script>
@@ -16,10 +16,14 @@ import panel from "./panel";
 import leftAside from "./leftAside";
 import panelSlot from "./planeSlot";
 export default {
+  props: ["brower"],
   data() {
     return {
-      btnClick: "111",
-      btnList: ["课程教程", "课程简介", "课程评价"]
+      btnClick: "",
+      btnList: ["课程教程", "课程评价"],
+      classMes: {},
+      videoList: [],
+      classAuthor: ""
     };
   },
   components: {
@@ -27,6 +31,32 @@ export default {
     panel,
     leftAside,
     panelSlot
+  },
+  mounted() {
+    if (typeof this.brower === "undefined") {
+      this.$router.push("/videosBrower");
+      return;
+    }
+    let classInfo = {
+      userName: this.brower.userName,
+      userId: this.brower.userId,
+      title: this.brower.form.name,
+      introduce: this.brower.form.introduce
+    };
+
+    let classAuthor = {
+      level: this.brower.form.level,
+      userName: this.brower.userName,
+      avatarUrl: this.brower.avatarUrl,
+      gate: 1,
+      date: this.brower.date
+    };
+
+    this.videoList = this.brower.form.videoList;
+
+    this.classAuthor = JSON.stringify(classAuthor);
+
+    this.classMes.classInfo = classInfo;
   }
 };
 </script>

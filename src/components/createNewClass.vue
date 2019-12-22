@@ -38,10 +38,22 @@
           <el-form-item label="课程难度" prop="level">
             <el-rate v-model="form.level"></el-rate>
           </el-form-item>
+          <el-form-item label="分类" prop="type">
+            <div class="config-item">
+              <el-tag
+                class="tag"
+                v-for="(type, index) in types"
+                :key="index"
+                type="info"
+                :effect="form.type === type.en ? 'plain' : 'dark'"
+                @click="onSelect('type', type.en)"
+              >{{ type.cn }}</el-tag>
+            </div>
+          </el-form-item>
           <el-form-item label="课程标签">
             <editTag v-model="form.interests" />
           </el-form-item>
-          <el-form-item label="课程详细介绍">
+          <!-- <el-form-item label="课程详细介绍">
             <el-input
               v-model="form.content"
               type="textarea"
@@ -49,7 +61,7 @@
               placeholder="课程详细介绍"
               :autosize="{ minRows: 3, maxRows: 8 }"
             ></el-input>
-          </el-form-item>
+          </el-form-item>-->
           <el-form-item label="课程附件">
             <el-upload
               class="upload-demo"
@@ -111,23 +123,38 @@ export default {
       }
     };
     return {
+      types: [
+        { cn: "后端", en: "backend" },
+        { cn: "前端", en: "frontend" },
+        { cn: "iOS", en: "iOS" },
+        { cn: "Android", en: "Android" },
+        { cn: "算法", en: "algorithm" },
+        { cn: "运维", en: "operational" },
+        { cn: "人工智能", en: "AI" },
+        { cn: "测试", en: "test" }
+      ],
       rules: {
         name: [{ validator: inputRuler, trigger: "blur", required: true }],
         introduce: [{ validator: inputRuler, trigger: "blur", required: true }],
-        level: [{ validator: inputRuler, trigger: "blur", required: true }]
+        level: [{ validator: inputRuler, trigger: "blur", required: true }],
+        type: [{ trigger: "blur", required: true }]
       },
       classId: "",
       form: {
+        type: "",
         name: "",
         introduce: "",
         level: 0,
         interests: [],
-        content: "",
+        // content: "",
         videoList: []
       }
     };
   },
   methods: {
+    onSelect(key, value) {
+      this.form[key] = value;
+    },
     uploadVideo() {
       this.form.videoList.push({
         url: "",
@@ -144,18 +171,18 @@ export default {
           this.$fetchPost("/class/content", {
             form: this.form,
             classId: this.classId,
+            userName: store.userinfo.userName,
+            avatarUrl: store.userinfo.avatarUrl,
             token: localStorage.getItem("loginKey")
           })
-            .then(res => {
-              window.console.log(res);
+            .then(() => {
               this.$notify({
                 title: "发布成功",
                 message: ("i", { style: "color: teal" }, "发布成功")
               });
               this.$router.push("/");
             })
-            .catch(res => {
-              window.console.log(res);
+            .catch(() => {
               this.$notify({
                 title: "请求失败",
                 message: ("i", { style: "color: teal" }, "请重新提交")
@@ -207,6 +234,13 @@ export default {
     .form {
       margin-left: 20px;
       width: 100%;
+      .config-item {
+        width: 100%;
+        .tag {
+          margin-left: 10px;
+          cursor: pointer;
+        }
+      }
       .el-form-item {
         margin: 20px;
         width: 300px;

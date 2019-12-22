@@ -1,8 +1,7 @@
 <template>
   <div class="video-player">
     <video id="myVideo" class="vjs-matrix video-js">
-      <source src="https://vjs.zencdn.net/v/oceans.mp4" type="video/mp4" />
-      <source src="https://vjs.zencdn.net/v/oceans.webm" type="video/webm" />
+      <source :src="videoSrc" type="video/mp4" />
     </video>
     <div class="video-player-aside">
       <div class="video-aside-btn">
@@ -15,7 +14,7 @@
         >{{item}}</el-button>
       </div>
       <div class="video-player-list scroll" v-show="btnSelect===0">
-        <div class="video-list-item" v-for="(item,index) in videoList" :key="item">
+        <div class="video-list-item" v-for="(item,index) in videoListShow" :key="item.uploadId">
           <div class="name-item">
             <svg
               class="circle"
@@ -32,25 +31,51 @@
               />
               <circle cx="20" cy="25" r="6" stroke-width="2" fill="#555555" />
             </svg>
-
-            <span class="name">课程名字</span>
+            <el-button
+              class="name"
+              type="text"
+              :disabled="videoMessage===index"
+              :style="{color:videoMessage===index?'white':'#9b9b9b'}"
+              @click="changeVideo(index)"
+            >{{item.name}}</el-button>
           </div>
-          <div class="time">22h</div>
+          <!-- <div class="time">22h</div> -->
         </div>
       </div>
-      <div class="danmu-list scroll" v-show="btnSelect===1">
+      <!-- 弹幕 -->
+      <!-- <div class="danmu-list scroll" v-show="btnSelect===1">
         <div class="danmu-list-item" v-for="(item) in videoList" :key="item">
           <div class="content" :title="item">{{item}}</div>
           <div class="time">time</div>
         </div>
-      </div>
+      </div>-->
     </div>
   </div>
 </template>
 <script>
 import videojs from "video.js";
 export default {
+  props: {
+    videoMessage: {
+      type: Number
+    },
+    videoList: {
+      type: Array
+    }
+  },
   mounted() {
+    if (
+      typeof this.videoMessage === "undefined" ||
+      typeof this.videoList === "undefined"
+    ) {
+      this.$router.push("/videosBrower");
+      return;
+    }
+    this.$nextTick(() => {
+      this.videoSrc = "http://vjs.zencdn.net/v/oceans.mp4";
+
+      this.videoListShow = this.videoList;
+    });
     this.player = videojs(
       "myVideo",
       {
@@ -67,9 +92,10 @@ export default {
   },
   data() {
     return {
+      videoSrc: "",
       btnSelect: 0,
-      btnList: ["课程", "弹幕"],
-      videoList: [0, 1, 23, 4, 5]
+      btnList: ["课程"],
+      videoListShow: []
     };
   },
   beforeDestroy() {
@@ -80,6 +106,9 @@ export default {
   methods: {
     btnClick(index) {
       this.btnSelect = index;
+    },
+    changeVideo(index) {
+      window.console.log(this.videoList[index]);
     }
   }
 };
@@ -183,6 +212,8 @@ export default {
         }
         .name {
           margin-left: 0;
+          color: #9b9b9b;
+          cursor: pointer;
         }
       }
 

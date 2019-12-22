@@ -23,7 +23,7 @@ export default {
       component: () => import("../views/news.vue")
     },
     {
-      path: "/newsdetail/:id",
+      path: "/newsdetail",
       name: "newsdetail",
       props: true,
       component: () => import("../views/NewsDetail.vue")
@@ -40,6 +40,7 @@ export default {
     {
       path: "/videosBrower",
       name: "videosBrower",
+
       component: () => import("../views/videoBrowers.vue")
     },
     {
@@ -55,17 +56,20 @@ export default {
     },
     {
       path: "/classList",
+      props: true,
       name: "classList",
       component: () => import("../views/classList.vue")
     },
     {
       path: "/videos",
       name: "videos",
+      props: true,
       component: () => import("../components/Videos.vue")
     },
     {
       path: "/videoplay",
       name: "videoplay",
+      props: true,
       component: () => import("../components/videoPlayer.vue")
     },
     {

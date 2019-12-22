@@ -6,29 +6,31 @@
       </el-col>
       <el-col justify="center">
         <div class="flex-row">
-          <el-avatar :size="50" :src="circleUrl"></el-avatar>
-          <div class="writer-name">name</div>
+          <el-avatar :size="50" :src="avatarUrl"></el-avatar>
+          <div class="writer-name">{{authorName}}</div>
         </div>
       </el-col>
       <el-row>
         <el-col class="writer-introduce">自我介绍</el-col>
         <el-col class="flex-row-btween">
           <div>难度</div>
-          <div>普通</div>
+          <div>
+            <el-rate v-model="level" :disabled="true"></el-rate>
+          </div>
         </el-col>
         <el-col class="flex-row-btween">
           <div>评分</div>
           <div>
-            <el-rate v-model="value" show-text></el-rate>
+            <el-rate v-model="value" :disabled="true" :show-text="false"></el-rate>
           </div>
         </el-col>
-        <el-col class="flex-row-btween">
+        <!-- <el-col class="flex-row-btween">
           <div>时间长度</div>
           <div>2h</div>
-        </el-col>
+        </el-col>-->
         <el-col class="flex-row-btween">
           <div>发布时间</div>
-          <div>2019.0.1</div>
+          <div>{{date}}</div>
         </el-col>
       </el-row>
     </el-row>
@@ -36,11 +38,27 @@
 </template>
 <script>
 export default {
+  props: {
+    classAuthor: String
+  },
   data() {
     return {
       circleUrl: "",
-      value: 5
+      value: 5,
+      level: 5,
+      authorName: "",
+      date: "",
+      avatarUrl: ""
     };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      let classAuthor = JSON.parse(this.classAuthor);
+      this.authorName = classAuthor.userName;
+      this.level = classAuthor.level;
+      this.date = classAuthor.date;
+      this.avatarUrl = classAuthor.avatarUrl;
+    });
   }
 };
 </script>

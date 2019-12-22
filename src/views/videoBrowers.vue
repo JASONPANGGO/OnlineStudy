@@ -1,21 +1,26 @@
 <template>
   <div class="video-browers-outer">
-    <div v-for="item in browseList" :key="item.title" class="browse-list">
+    <div
+      v-for="item in browseList"
+      :key="item.title"
+      class="browse-list"
+      @click="showItem(item.title)"
+    >
       <div class="list-title">
         <span>{{item.title}}</span>
       </div>
-      <div class="list-btn-layer">
+      <div class="list-btn-layer" v-show="type=== item.title">
         <router-link
-          :to="'classList'"
+          :to="{ name: 'videos', params: { brower: brower}}"
           class="list-btn-item"
           v-for="brower in item.btnList"
-          :key="brower.name"
+          :key="brower.classId"
         >
           <img
             src="https://tse4.mm.bing.net/th?id=OIP.8wmLG38KPhtC3Vxo2z8ZMwHaE7&pid=Api&rs=1"
             class="list-btn-img"
           />
-          <div class="list-btn-text">javascript</div>
+          <div class="list-btn-text">{{brower.form.name}}</div>
         </router-link>
       </div>
     </div>
@@ -25,39 +30,55 @@
 export default {
   data() {
     return {
+      type: "前端",
       browseList: [
         {
           title: "前端",
-          btnList: [
-            {
-              name: "javascript",
-              img: "src",
-              classId: "id2"
-            },
-            {
-              name: "css",
-              img: "src",
-              classId: "id1"
-            }
-          ]
+          btnList: []
         },
         {
-          title: "后台",
-          btnList: [
-            {
-              name: "javascript",
-              img: "src",
-              classId: "id2"
-            },
-            {
-              name: "css",
-              img: "src",
-              classId: "id1"
-            }
-          ]
+          title: "后端",
+          btnList: []
+        },
+        {
+          title: "iOS",
+          btnList: ""
+        },
+        {
+          title: "Android",
+          btnList: ""
+        },
+        {
+          title: "算法",
+          btnList: ""
+        },
+        {
+          title: "运维",
+          btnList: ""
+        },
+        {
+          title: "人工智能",
+          btnList: ""
+        },
+        {
+          title: "测试",
+          btnList: ""
         }
       ]
     };
+  },
+  async mounted() {
+    // 请求所有
+    await this.$fetchGet("/classList").then(res => {
+      this.browseList.forEach((item, index) => {
+        item.btnList = res[index].date;
+      });
+    });
+  },
+  methods: {
+    showItem(index) {
+      this.type = index;
+    }
   }
 };
 </script>
@@ -84,7 +105,7 @@ export default {
       background: #575757;
       opacity: 1;
     }
-    transition: background 2s, opacity 1s;
+    transition: background 2s, opacity 1s, display 1s;
     opacity: 0.5;
     .list-btn-item {
       color: white;
@@ -92,7 +113,6 @@ export default {
         transition: color 1s;
         text-decoration: underline;
       }
-
       .list-btn-img {
         width: 40px;
         height: 40px;

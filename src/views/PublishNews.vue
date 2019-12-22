@@ -128,7 +128,7 @@ export default {
     submit() {
       this.$refs["form"].validate(vaild => {
         if (vaild) {
-          this.news.date = new Date().toString();
+          this.news.date = new Date().toLocaleString();
           this.news.userName = store.userinfo.userName;
           this.$fetchPost("/news", {
             newsId: this.newsId,
@@ -136,6 +136,9 @@ export default {
             form: this.news
           });
           this.$router.push("/");
+          this.$notify({
+            title: "上传成功"
+          });
         } else {
           this.$notify({
             title: "请将信息输入完全",

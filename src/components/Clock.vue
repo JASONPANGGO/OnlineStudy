@@ -14,7 +14,12 @@
 export default {
   name: "Clock",
   props: {
-    countdown: Number
+    countdown: Number,
+    statuse: Boolean
+  },
+  model: {
+    event: "parent-event",
+    prop: "countdown"
   },
   data() {
     return {
@@ -32,20 +37,21 @@ export default {
   methods: {
     countdownStart() {
       let that = this;
-      this.countdownTime = this.$props.countdown;
-      
+      this.countdownTime = 15;
+      this.progress = 100;
       this.timer = setInterval(() => {
         if (this.countdownTime > 0) {
           this.countdownTime--;
+          this.$emit("parent-event", this.countdownTime);
         } else {
-          clearInterval(this.timer);
+          clearInterval(that.timer);
         }
       }, 1000);
 
       this.anim = requestAnimationFrame(function loop() {
         that.drawRing(that.progress);
         if (that.progress > 0) {
-          that.progress -= 100 / 60 / that.$props.countdown;
+          that.progress -= 100 / 60 / 15;
           that.anim = requestAnimationFrame(loop);
         } else {
           that.drawRing(0);
